@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
@@ -16,14 +17,15 @@
     <header class="site-header">
       <div class="header-inner">
         <a href="/" class="logo">
-          <span class="logo-icon" aria-hidden="true">◇</span>
+          <span class="logo-icon" aria-hidden="true"><img src="/icon.png" alt="" /></span>
           <span class="logo-text">Goal Muse</span>
         </a>
         <nav class="nav">
           <a href="#features">Features</a>
           <a href="#how">How it works</a>
+          <a href="#video">Video</a>
           <a href="#team">Team</a>
-          <a class="cta-nav" href="#download">Get the app</a>
+          <a class="cta-nav js-open-download-modal" href="#download">Get the app</a>
         </nav>
         <button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -32,8 +34,9 @@
       <nav class="nav-mobile" aria-hidden="true">
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
+        <a href="#video">Video</a>
         <a href="#team">Team</a>
-        <a href="#download">Get the app</a>
+        <a class="js-open-download-modal" href="#download">Get the app</a>
       </nav>
     </header>
 
@@ -56,7 +59,7 @@
             Set goals, build vision boards, and stay on track with voice commands and AI insights. Goal Muse turns intention into action.
           </p>
           <div class="hero-ctas">
-            <a href="#download" class="btn btn-primary">
+            <a href="#download" class="btn btn-primary js-open-download-modal">
               <span>Get the app</span>
               <span class="btn-arrow">→</span>
             </a>
@@ -89,7 +92,7 @@
               <p>Create boards that keep your dreams in sight. Pin images, quotes, and milestones in one place.</p>
             </li>
             <li class="feature-card" style="--i: 1">
-              <div class="feature-icon"><span aria-hidden="true">✓</span></div>
+              <div class="feature-icon feature-icon-img" aria-hidden="true"><img src="/favicon.png" alt="" /></div>
               <h3>Goals & tasks</h3>
               <p>Break big goals into tasks. Track progress and stay accountable with a clear roadmap.</p>
             </li>
@@ -129,6 +132,29 @@
               <p>Use voice, journal, and AI to stay on track and adjust.</p>
             </li>
           </ol>
+        </div>
+      </section>
+
+      <section id="video" class="video-section">
+        <div class="container">
+          <p class="section-label">See it in action</p>
+          <h2 class="section-title">Watch Goal Muse</h2>
+          <p class="section-desc">A quick walkthrough of the app.</p>
+          <div class="video-embed-wrap">
+            <!-- Replace the src below with your YouTube embed URL, e.g. https://www.youtube.com/embed/VIDEO_ID -->
+            <iframe
+              id="youtube-embed"
+              class="video-embed"
+              src=""
+              title="Goal Muse video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+            <div class="video-placeholder" id="video-placeholder" aria-hidden="true">
+              <span class="video-placeholder-icon" aria-hidden="true">▶</span>
+              <p>Add your YouTube video link in <code>index.html</code> (search for <code>youtube-embed</code>)</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -177,14 +203,14 @@
           <h2 class="cta-title">Ready to bring your vision to life?</h2>
           <p class="cta-desc">Download Goal Muse and start building your board today.</p>
           <div class="cta-buttons">
-            <a href="#" class="store-btn store-apple" aria-label="Download on the App Store">
+            <button type="button" class="store-btn store-apple js-open-download-modal" aria-label="Get the app">
               <span class="store-label">Download on the</span>
               <span class="store-name">App Store</span>
-            </a>
-            <a href="#" class="store-btn store-google" aria-label="Get it on Google Play">
+            </button>
+            <button type="button" class="store-btn store-google js-open-download-modal" aria-label="Get the app">
               <span class="store-label">Get it on</span>
               <span class="store-name">Google Play</span>
-            </a>
+            </button>
           </div>
           <p class="cta-web">Prefer the web? <a href="../mobile/">Open Goal Muse in the browser</a>.</p>
         </div>
@@ -194,13 +220,33 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <a href="/" class="logo">
-          <span class="logo-icon" aria-hidden="true">◇</span>
+          <span class="logo-icon" aria-hidden="true"><img src="/icon.png" alt="" /></span>
           <span class="logo-text">Goal Muse</span>
         </a>
         <p class="footer-tagline">Your vision, one board.</p>
+        <div class="footer-links">
+          <a href="https://github.com/Isomkevin/GoalMuse" target="_blank" rel="noopener noreferrer" class="footer-link">View on GitHub</a>
+        </div>
         <p class="footer-copy">© Goal Muse. All rights reserved.</p>
       </div>
     </footer>
+
+    <div id="download-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-dialog">
+        <button type="button" class="modal-close" aria-label="Close modal" data-close-modal>×</button>
+        <h2 id="modal-title" class="modal-title">Get Goal Muse</h2>
+        <p class="modal-desc">Goal Muse is currently available as an <strong>APK for Android</strong>. Download below. App Store and Google Play versions are coming soon.</p>
+        <div class="modal-actions">
+          <a href="#" id="apk-download-link" class="btn btn-primary modal-apk-btn">
+            <span>Download APK</span>
+            <span class="btn-arrow">↓</span>
+          </a>
+          <p class="modal-note">Add your APK file link in <code>index.html</code> (id: <code>apk-download-link</code>).</p>
+        </div>
+        <p class="modal-github">Build from source: <a href="https://github.com/Isomkevin/GoalMuse" target="_blank" rel="noopener noreferrer">GitHub → GoalMuse</a></p>
+      </div>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
