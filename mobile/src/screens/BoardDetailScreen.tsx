@@ -59,9 +59,11 @@ function GoalCardContent({
             onError={() => setImageError(true)}
           />
         ) : (
-          <View style={styles.goalImagePlaceholder}>
-            <Icon name="image" size={32} color={colors.primary + '66'} />
-          </View>
+          <Image
+            source={require('../../assets/placeholder.png')}
+            style={styles.goalImage}
+            resizeMode="cover"
+          />
         )}
       </View>
       <View style={styles.goalBody}>

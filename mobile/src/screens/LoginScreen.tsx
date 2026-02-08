@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -14,11 +15,19 @@ import { useAuth } from '../context/AuthContext';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
 
+const DEMO_EMAIL = 'demo@goalmuse.app';
+const DEMO_PASSWORD = 'demo';
+
 export function LoginScreen() {
   const navigation = useNavigation<any>();
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const fillDemo = () => {
+    setEmail(DEMO_EMAIL);
+    setPassword(DEMO_PASSWORD);
+  };
 
   const handleLogin = async () => {
     if (!email.trim()) return;
@@ -43,7 +52,7 @@ export function LoginScreen() {
           <View style={styles.content}>
             <View style={styles.branding}>
               <View style={styles.logo}>
-                <Icon name="auto_awesome" size={36} color={colors.white} />
+                <Image source={require('../../assets/icon.png')} style={styles.logoImage} resizeMode="contain" />
               </View>
               <Text style={styles.title}>GoalMuse</Text>
               <Text style={styles.subtitle}>Your vision, one board.</Text>
@@ -100,10 +109,16 @@ export function LoginScreen() {
               </View>
             </View>
 
-            <View style={styles.demoHint}>
+            <Pressable
+              style={({ pressed }) => [styles.demoHint, pressed && styles.demoHintPressed]}
+              onPress={fillDemo}
+              hitSlop={8}
+              accessibilityLabel="Fill demo credentials"
+              accessibilityHint="Fills email and password with demo account"
+            >
               <Icon name="info" size={14} color={colors.gray400} />
-              <Text style={styles.demoText}>Demo: demo@goalmuse.app</Text>
-            </View>
+              <Text style={styles.demoText}>Tap to fill demo: {DEMO_EMAIL}</Text>
+            </Pressable>
           </View>
           <View style={styles.bottomBar} />
         </View>
@@ -152,15 +167,15 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 16,
-    backgroundColor: colors.primary,
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
+    overflow: 'hidden',
+  },
+  logoImage: {
+    width: 56,
+    height: 56,
   },
   title: {
     fontSize: 36,
@@ -258,6 +273,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray50,
     borderRadius: 9999,
     alignSelf: 'center',
+  },
+  demoHintPressed: {
+    opacity: 0.7,
   },
   demoText: {
     fontSize: 12,

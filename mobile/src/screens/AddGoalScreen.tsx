@@ -133,9 +133,9 @@ export function AddGoalScreen() {
         </View>
         <View style={styles.field}>
           <Text style={styles.label}>Goal image (optional)</Text>
-          {imageUri ? (
-            <>
-              <View style={styles.imagePreviewWrap}>
+          <View style={styles.imagePreviewWrap}>
+            {imageUri ? (
+              <>
                 <Image
                   key={imageUri}
                   source={{ uri: imageUri }}
@@ -146,9 +146,17 @@ export function AddGoalScreen() {
                 <Pressable style={styles.removeImageBtn} onPress={clearImage}>
                   <Icon name="close" size={20} color={colors.white} />
                 </Pressable>
-              </View>
-              <Text style={styles.imageHint}>Tap buttons below to replace</Text>
-            </>
+              </>
+            ) : (
+              <Image
+                source={require('../../assets/placeholder.png')}
+                style={styles.imagePreview}
+                resizeMode="cover"
+              />
+            )}
+          </View>
+          {imageUri ? (
+            <Text style={styles.imageHint}>Tap buttons below to replace</Text>
           ) : null}
           <View style={styles.imageButtonRow}>
             <Pressable style={styles.imageBtn} onPress={pickImageFromGallery}>
