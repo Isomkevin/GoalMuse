@@ -4,8 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppState } from '../context/AppStateContext';
 import { AppBar } from '../components/AppBar';
 import { BottomNav } from '../components/BottomNav';
+import { DatePickerModal } from '../components/DatePickerModal';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
+
+function toYYYYMMDD(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
 
 function formatJournalDate(dateStr: string): { label: string; isRecent: boolean } {
   const d = new Date(dateStr);
@@ -28,15 +33,23 @@ export function TasksJournalScreen() {
   const [newJournalContent, setNewJournalContent] = useState('');
   const [selectedGoalIdForEntry, setSelectedGoalIdForEntry] = useState<string | null>(null);
   const [goalPickerVisible, setGoalPickerVisible] = useState(false);
+  const [entryDate, setEntryDate] = useState(toYYYYMMDD(new Date()));
+  const [showEntryDatePicker, setShowEntryDatePicker] = useState(false);
   const remaining = tasks.filter((t) => !t.completed).length;
   const activeGoals = goals.filter((g) => !g.completed);
 
   const handleSaveEntry = () => {
     if (!newJournalContent.trim()) return;
-    addJournalEntry(newJournalContent.trim(), selectedGoalIdForEntry ?? undefined);
+    addJournalEntry(newJournalContent.trim(), selectedGoalIdForEntry ?? undefined, entryDate);
     setNewJournalContent('');
     setSelectedGoalIdForEntry(null);
+    setEntryDate(toYYYYMMDD(new Date()));
   };
+
+  const entryDateDisplay = (() => {
+    const d = new Date(entryDate);
+    return isNaN(d.getTime()) ? entryDate : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  })();
 
   return (
     <View style={styles.container}>
@@ -81,6 +94,13 @@ export function TasksJournalScreen() {
         <View style={styles.journalWrap}>
           <Text style={styles.inputLabel}>Today's Reflection</Text>
           <TextInput style={styles.journalInput} placeholder="What did you do today?" placeholderTextColor={colors.textMuted} value={newJournalContent} onChangeText={setNewJournalContent} multiline />
+          <View style={styles.linkToGoalRow}>
+            <Text style={styles.linkToGoalLabel}>Entry date</Text>
+            <Pressable style={styles.linkToGoalBtn} onPress={() => setShowEntryDatePicker(true)}>
+              <Text style={styles.linkToGoalBtnText} numberOfLines={1}>{entryDateDisplay}</Text>
+              <Icon name="calendar_today" size={20} color={colors.primary} />
+            </Pressable>
+          </View>
           <View style={styles.linkToGoalRow}>
             <Text style={styles.linkToGoalLabel}>Link to goal</Text>
             <Pressable style={styles.linkToGoalBtn} onPress={() => setGoalPickerVisible(true)}>
@@ -137,6 +157,20 @@ export function TasksJournalScreen() {
               </View>
             </Pressable>
           </Modal>
+          <DatePickerModal
+            visible={showEntryDatePicker}
+            value={(() => {
+              const d = new Date(entryDate);
+              return isNaN(d.getTime()) ? new Date() : d;
+            })()}
+            onConfirm={(date) => {
+              setEntryDate(toYYYYMMDD(date));
+              setShowEntryDatePicker(false);
+            }}
+            onDismiss={() => setShowEntryDatePicker(false)}
+            mode="date"
+            title="Entry date"
+          />
         </View>
       )}
       <BottomNav />
