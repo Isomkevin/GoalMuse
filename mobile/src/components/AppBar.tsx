@@ -11,28 +11,38 @@ interface AppBarProps {
   leftAction?: React.ReactNode;
   rightAction?: React.ReactNode;
   subtitle?: string;
+  /** When 'left', title is large and left-aligned (no left action area). */
+  titleAlign?: 'left' | 'center';
 }
 
-export function AppBar({ title, showBack, onBack, leftAction, rightAction, subtitle }: AppBarProps) {
+export function AppBar({ title, showBack, onBack, leftAction, rightAction, subtitle, titleAlign = 'center' }: AppBarProps) {
   const insets = useSafeAreaInsets();
+  const isTitleLeft = titleAlign === 'left';
+
   return (
     <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.bar}>
-        <View style={styles.left}>
-          {showBack && onBack ? (
+        <View style={[styles.left, isTitleLeft && styles.leftGrow]}>
+          {!isTitleLeft && showBack && onBack ? (
             <TouchableOpacity onPress={onBack} style={styles.iconBtn} hitSlop={12}>
               <Icon name="arrow_back_ios" size={24} color={colors.text} />
             </TouchableOpacity>
-          ) : leftAction ? (
+          ) : !isTitleLeft && leftAction ? (
             leftAction
+          ) : isTitleLeft ? (
+            <Text style={styles.titleLeft} numberOfLines={1}>
+              {title}
+            </Text>
           ) : (
             <View style={styles.placeholder} />
           )}
         </View>
-        <Text style={styles.title} numberOfLines={1}>
-          {title}
-        </Text>
-        <View style={styles.right}>{rightAction ?? <View style={styles.placeholder} />}</View>
+        {!isTitleLeft && (
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+        )}
+        <View style={[styles.right, isTitleLeft && styles.rightFlex]}>{rightAction ?? <View style={styles.placeholder} />}</View>
       </View>
       {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
     </View>
@@ -55,7 +65,9 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   left: { minWidth: 48, alignItems: 'flex-start' },
+  leftGrow: { flex: 1 },
   right: { minWidth: 48, alignItems: 'flex-end' },
+  rightFlex: { flex: 1 },
   title: {
     flex: 1,
     textAlign: 'center',
@@ -63,6 +75,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.text,
     paddingHorizontal: 8,
+  },
+  titleLeft: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.text,
   },
   subtitle: {
     fontSize: 12,

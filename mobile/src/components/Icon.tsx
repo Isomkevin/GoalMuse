@@ -49,6 +49,12 @@ const symbolToIcon: Record<string, string> = {
   arrow_drop_down: 'chevron-down',
   arrow_forward: 'chevron-right',
   camera_alt: 'camera-outline',
+  // Board list / themes
+  target: 'bullseye-arrow',
+  briefcase: 'briefcase-outline',
+  schedule: 'clock-outline',
+  insights: 'chart-line',
+  layers: 'layers',
 };
 
 interface IconProps {

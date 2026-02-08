@@ -61,7 +61,7 @@ interface AppStateContextValue {
   addTask: (title: string, goalId?: string) => void;
   toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
-  addJournalEntry: (content: string, goalId?: string) => void;
+  addJournalEntry: (content: string, goalId?: string, date?: string) => void;
   getGoalsByBoard: (boardId: string) => Goal[];
   getGoalById: (goalId: string) => Goal | undefined;
   getOrderedGoalsByBoard: (boardId: string) => Goal[];
@@ -202,9 +202,10 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
   );
 
   const addJournalEntry = useCallback(
-    (content: string, goalId?: string) => {
+    (content: string, goalId?: string, date?: string) => {
       const id = 'j' + Date.now();
-      const newJournal = [{ id, date: new Date().toISOString().slice(0, 10), content, goalId }, ...journal];
+      const entryDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : new Date().toISOString().slice(0, 10);
+      const newJournal = [{ id, date: entryDate, content, goalId }, ...journal];
       setJournal(newJournal);
       persist(boards, goals, tasks, newJournal);
     },

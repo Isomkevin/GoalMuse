@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppState } from '../context/AppStateContext';
 import { navigateToEditGoal } from '../navigation/rootNavigation';
@@ -10,7 +10,7 @@ import { colors } from '../theme/colors';
 
 export function GoalsListScreen() {
   const navigation = useNavigation<any>();
-  const { goals, boards, updateGoal } = useAppState();
+  const { goals, boards, updateGoal, deleteGoal } = useAppState();
   const activeGoals = goals.filter((g) => !g.completed);
   const firstBoardId = boards[0]?.id;
 
@@ -26,6 +26,17 @@ export function GoalsListScreen() {
   const toggleGoal = (id: string) => {
     const g = goals.find((x) => x.id === id);
     if (g) updateGoal(id, { completed: !g.completed });
+  };
+
+  const handleDeleteGoal = (goalId: string, goalTitle: string) => {
+    Alert.alert(
+      'Delete goal?',
+      `"${goalTitle}" will be removed. This can't be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: () => deleteGoal(goalId) },
+      ]
+    );
   };
 
   return (
@@ -116,9 +127,14 @@ export function GoalsListScreen() {
                     <Icon name="calendar_today" size={16} color={colors.textMuted} />
                     <Text style={styles.dateText}>By {formatDate(goal.targetDate) || '—'}</Text>
                   </View>
-                  <Pressable onPress={() => navigateToEditGoal(goal.id)}>
-                    <Text style={styles.editLink}>Edit</Text>
-                  </Pressable>
+                  <View style={styles.goalActions}>
+                    <Pressable onPress={() => navigateToEditGoal(goal.id)}>
+                      <Text style={styles.editLink}>Edit</Text>
+                    </Pressable>
+                    <Pressable onPress={() => handleDeleteGoal(goal.id, goal.title)}>
+                      <Text style={styles.deleteLink}>Delete</Text>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
             ))}
@@ -295,10 +311,20 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: colors.textMuted,
   },
+  goalActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
   editLink: {
     fontSize: 14,
     fontWeight: '500',
     color: colors.primary,
+  },
+  deleteLink: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: colors.red,
   },
   empty: {
     paddingVertical: 24,

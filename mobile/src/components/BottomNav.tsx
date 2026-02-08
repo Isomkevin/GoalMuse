@@ -5,13 +5,13 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Icon } from './Icon';
 import { colors } from '../theme/colors';
 
-type TabName = 'Boards' | 'Goals' | 'Insights' | 'Profile';
+type TabName = 'Boards' | 'Tracking' | 'Insights' | 'Settings';
 
 const tabs: { name: TabName; route: string; icon: string }[] = [
   { name: 'Boards', route: 'Boards', icon: 'grid_view' },
-  { name: 'Goals', route: 'Goals', icon: 'track_changes' },
-  { name: 'Stats', route: 'Insights', icon: 'bar_chart' },
-  { name: 'Profile', route: 'Profile', icon: 'person' },
+  { name: 'Tracking', route: 'Goals', icon: 'schedule' },
+  { name: 'Insights', route: 'Insights', icon: 'analytics' },
+  { name: 'Settings', route: 'Profile', icon: 'settings' },
 ];
 
 export function BottomNav() {

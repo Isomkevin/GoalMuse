@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   Dimensions,
   Image,
   Pressable,
@@ -144,7 +145,7 @@ export function BoardDetailScreen() {
   const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<ParamList, 'BoardDetail'>>();
   const { boardId } = route.params;
-  const { boards, getOrderedGoalsByBoard, reorderBoardGoals } = useAppState();
+  const { boards, getOrderedGoalsByBoard, reorderBoardGoals, deleteBoard, deleteGoal } = useAppState();
   const board = boards.find((b) => b.id === boardId);
   const orderedGoals = getOrderedGoalsByBoard(boardId);
 
@@ -224,6 +225,31 @@ export function BoardDetailScreen() {
 
   const draggingGoal = draggingGoalId ? goals.find((g) => g.id === draggingGoalId) : null;
 
+  const handleDeleteBoard = useCallback(() => {
+    if (!board) return;
+    Alert.alert(
+      'Delete board?',
+      `"${board.title}" and all its goals will be removed. This can't be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: () => { deleteBoard(boardId); navigation.goBack(); } },
+      ]
+    );
+  }, [board, boardId, deleteBoard, navigation]);
+
+  const handleGoalOptions = useCallback((goal: Goal) => {
+    Alert.alert(goal.title, undefined, [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Edit goal', onPress: () => navigateToEditGoal(goal.id) },
+      { text: 'Delete goal', style: 'destructive', onPress: () => {
+        Alert.alert('Delete goal?', 'This goal will be removed from the board.', [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Delete', style: 'destructive', onPress: () => deleteGoal(goal.id) },
+        ]);
+      } },
+    ]);
+  }, [deleteGoal]);
+
   const overlayAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: dragTranslateX.value },
@@ -250,7 +276,7 @@ export function BoardDetailScreen() {
         onBack={() => navigation.goBack()}
         subtitle={`${goals.length} active goals · Long-press a card to reorder`}
         rightAction={
-          <Pressable style={styles.iconBtn}>
+          <Pressable style={styles.iconBtn} onPress={handleDeleteBoard}>
             <Icon name="more_horiz" size={24} color={colors.text} />
           </Pressable>
         }
@@ -274,6 +300,12 @@ export function BoardDetailScreen() {
             dragTranslateY={dragTranslateY}
             isDragging={draggingGoalId === goal.id}
           />
+          <Pressable
+            style={styles.goalCardMenu}
+            onPress={() => handleGoalOptions(goal)}
+          >
+            <Icon name="more_horiz" size={20} color={colors.textMuted} />
+          </Pressable>
           </View>
         ))}
       </ScrollView>
@@ -336,7 +368,20 @@ const styles = StyleSheet.create({
     gap: GRID_GAP,
   },
   cardSlot: {
+    position: 'relative',
     marginBottom: GRID_GAP,
+  },
+  goalCardMenu: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    zIndex: 10,
   },
   cardWrapper: {
     flex: 1,
