@@ -320,25 +320,21 @@ body {
   overflow: hidden;
 }
 .phone-ui {
-  padding: 2.5rem 1rem 1rem;
+  position: relative;
+  width: 100%;
   height: 100%;
+  overflow: hidden;
 }
-.phone-status {
-  height: 20px;
-  margin-bottom: 1rem;
-  background: var(--border);
-  border-radius: 4px;
-  opacity: 0.6;
+.phone-screenshot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
-.phone-card {
-  height: 64px;
-  background: var(--card);
-  border-radius: var(--radius);
-  margin-bottom: 0.75rem;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-.phone-card.short { height: 48px; }
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
