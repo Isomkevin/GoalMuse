@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Modal Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-100 font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-black/40 items-center justify-end">
+<!-- Bottom Sheet Modal -->
+<div class="flex flex-col w-full max-w-md bg-white dark:bg-background-dark rounded-t-xl overflow-hidden shadow-2xl">
+<!-- BottomSheetHandle -->
+<button class="flex h-6 w-full items-center justify-center pt-2">
+<div class="h-1.5 w-12 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+</button>
+<!-- Header -->
+<div class="flex items-center justify-between px-6 py-4">
+<div class="w-10"></div> <!-- Spacer for centering -->
+<h4 class="text-[#111618] dark:text-white text-lg font-semibold leading-normal">Account</h4>
+<button class="text-primary font-medium text-sm">Done</button>
+</div>
+<!-- Profile Section -->
+<div class="flex flex-col items-center px-6 py-8">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 border-2 border-white dark:border-gray-800 shadow-md" data-alt="Professional user profile portrait photography" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6AoXahpm1AA6d45JzNd_P3QdUaQFGaPm5OZ3URsbBpdwU9qBrlx6K6dDtUznw2t_7UkN1F-egxkxC_NgEP5qWWsOen8K5Fj1sJ1TWKpF8mgQwux-FCwmYzGH4iHxJI0t8HxDCqrM_5Ejtwog7GBc_CXOa1oe271vwmiUVnJjsYoF2VSkRa-prtHtQbY1oi5yeQFPg3F7NHc6aWmtMmkH5KidDDdH6buAT-tJ94sipwVh3jvcN9G581udtXxH1YfCmW4cse6KtMVQ");'>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary p-1.5 rounded-full border-2 border-white dark:border-gray-800 shadow-sm">
+<span class="material-symbols-outlined text-white text-[16px]">edit</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="text-[#111618] dark:text-white text-xl font-bold leading-tight">GoalMuse Member</p>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal">you@example.com</p>
+</div>
+</div>
+<!-- Settings List -->
+<div class="flex flex-col px-4 gap-1">
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 px-4 h-14 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1 truncate">Personal Information</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 px-4 h-14 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1 truncate">Security &amp; Password</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 px-4 h-14 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1 truncate">Notifications</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 px-4 h-14 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">star</span>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1 truncate">Subscription Plan</p>
+<div class="flex items-center gap-2">
+<span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Premium</span>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Destructive Action -->
+<div class="px-4 py-8 mt-2">
+<button class="flex w-full items-center justify-center gap-2 h-14 rounded-xl bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 font-semibold text-base active:scale-95 transition-transform">
+<span class="material-symbols-outlined">logout</span>
+                    Log out
+                </button>
+<p class="text-center text-gray-400 dark:text-gray-500 text-xs mt-6">Version 2.4.1 (Build 108)</p>
+</div>
+<!-- Bottom Safe Area -->
+<div class="h-8 bg-white dark:bg-background-dark"></div>
+</div>
+</div>
+</body></html>

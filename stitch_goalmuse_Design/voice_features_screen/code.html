@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Voice Features Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
+<!-- Top Bar -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Voice Features</h2>
+<div class="size-12 flex items-center justify-end">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">settings</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 py-2 space-y-4">
+<!-- Card 1: Morning planning -->
+<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-[#1c271f] p-5 shadow-sm border border-slate-100 dark:border-white/5">
+<div class="flex flex-[2_2_0px] flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary">light_mode</span>
+<p class="text-slate-900 dark:text-white text-base font-bold leading-tight">Morning planning</p>
+</div>
+<p class="text-slate-500 dark:text-[#9db9a6] text-sm font-normal leading-normal">Set your intentions for a productive day ahead.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-5 flex-row-reverse bg-primary text-background-dark pr-3 gap-2 text-sm font-semibold leading-normal w-fit">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span class="truncate">Start my day</span>
+</button>
+</div>
+<div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-xl flex-shrink-0" data-alt="Soft morning sunrise through forest trees" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2vSendqNq-FK_VeMl9pLnaCUhWgsY6F_FOcb0ngzclzcRr9R_Y-UT8IPZ4xjFT0M-m3_j3-MG4hcEl1k6rYVkEGwDanVxYbz1Qo7Fs48zsDAGdz_Z8j3GI-3NOiUjxUGss9AXSzB3YLxssCNoxLp7aJxuWc0K9ntGu7BJEHldwG-QyQpLi8yZAZzI5FHVlgAFUhAWEua1kwgxJHTEQX6Cue0uPoIt6rmqucy3v-Sk8pSvslGmC1zQG5-CHahzqw195q1fJyALxv8");'></div>
+</div>
+<!-- Card 2: End-of-day reflection -->
+<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-[#1c271f] p-5 shadow-sm border border-slate-100 dark:border-white/5">
+<div class="flex flex-[2_2_0px] flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary">dark_mode</span>
+<p class="text-slate-900 dark:text-white text-base font-bold leading-tight">End-of-day reflection</p>
+</div>
+<p class="text-slate-500 dark:text-[#9db9a6] text-sm font-normal leading-normal">Celebrate your wins and let go of the day's stress.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-5 flex-row-reverse bg-slate-100 dark:bg-[#28392e] text-slate-900 dark:text-white pr-3 gap-2 text-sm font-semibold leading-normal w-fit">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span class="truncate">Reflect on today</span>
+</button>
+</div>
+<div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-xl flex-shrink-0" data-alt="Quiet night sky with crescent moon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdJVgOgNzCXzsZhPv0MmdFygP_cGu3pkZSfNNGyMtC0ZUU9LHsIWHJhYhcc0x6aq1PUe3NxqpQ3tUpor-W4k8AEI1wFIFRjpKkOFJ0bWQQ4TvZ3A0wU8QFPJqoNkQsYux14JHVbUkz6cegbs4ELBpsdQzOSKhUJVvTPowAtmXJF-Hef-wIgHCSI4-Q6N2xIqyTOt4j8-r-Jvvm_gkBJRkdOuDU433uQbXrK-nfxdh0k3sztjUTyMNoRUKQnqm5WUUxlRMVSJ4Pxkk");'></div>
+</div>
+<!-- Card 3: Gentle nudge -->
+<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-[#1c271f] p-5 shadow-sm border border-slate-100 dark:border-white/5">
+<div class="flex flex-[2_2_0px] flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary">volume_up</span>
+<p class="text-slate-900 dark:text-white text-base font-bold leading-tight">Gentle nudge</p>
+</div>
+<p class="text-slate-500 dark:text-[#9db9a6] text-sm font-normal leading-normal">Hear your next priority in a soothing voice.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-5 flex-row-reverse bg-slate-100 dark:bg-[#28392e] text-slate-900 dark:text-white pr-3 gap-2 text-sm font-semibold leading-normal w-fit">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span class="truncate">Read my next action</span>
+</button>
+</div>
+<div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-xl flex-shrink-0" data-alt="Abstract soft green waves of sound" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDF8a3YQQekFbkTyq8PwyUkgMLozSycVOkKuaGvPPaKFPYVmZ2amE2RdGKU2px5_yAZ4IDnmzK3bNYxV-y1pqeEJe9vx3jQS-O2Yk1iPAVRxR0hf6Hg-sCdb2J_pPPzH8F5BMVq9v0sOqlEmR4bl2-ZmLB85UiL3s4u8v3LV9W_auMdN5kcwZnU2OQTzVlTLhoLmOkBPGfFvl_ySqG0gG-vlBBLd-WZYnKGpMzvhz1x3JNGEEbnjuGs-w2oDiIqCUmmsrtsoXHw80o");'></div>
+</div>
+<!-- Recording Status Area -->
+<div class="mt-8 flex flex-col gap-4 p-5 rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex gap-1 items-center">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-normal">Recording audio...</p>
+</div>
+</div>
+<p class="text-slate-600 dark:text-primary text-sm font-medium leading-normal">00:12 / 00:45</p>
+</div>
+<!-- Visualizer Mockup -->
+<div class="flex items-end justify-center gap-1 h-12">
+<div class="w-1.5 h-4 bg-primary rounded-full opacity-40"></div>
+<div class="w-1.5 h-6 bg-primary rounded-full opacity-60"></div>
+<div class="w-1.5 h-10 bg-primary rounded-full opacity-80"></div>
+<div class="w-1.5 h-8 bg-primary rounded-full"></div>
+<div class="w-1.5 h-5 bg-primary rounded-full opacity-70"></div>
+<div class="w-1.5 h-12 bg-primary rounded-full"></div>
+<div class="w-1.5 h-7 bg-primary rounded-full opacity-50"></div>
+<div class="w-1.5 h-9 bg-primary rounded-full opacity-90"></div>
+<div class="w-1.5 h-6 bg-primary rounded-full opacity-60"></div>
+<div class="w-1.5 h-4 bg-primary rounded-full opacity-40"></div>
+</div>
+<div class="relative h-2 w-full rounded-full bg-slate-200 dark:bg-[#3b5443] overflow-hidden">
+<div class="absolute left-0 top-0 h-full rounded-full bg-primary" style="width: 35%;"></div>
+</div>
+<div class="flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">hearing</span>
+<p class="text-slate-500 dark:text-[#9db9a6] text-sm font-medium leading-normal italic">GoalMuse is listening</p>
+</div>
+<div class="flex justify-center gap-6 mt-2">
+<button class="size-12 rounded-full bg-red-500/10 text-red-500 border border-red-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="size-14 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-3xl">check</span>
+</button>
+<button class="size-12 rounded-full bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined">pause</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Navigation Bar Spacer -->
+<div class="h-10 bg-background-light dark:bg-background-dark"></div>
+</div>
+</body></html>

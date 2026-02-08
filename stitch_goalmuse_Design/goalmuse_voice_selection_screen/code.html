@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoalMuse Voice Selection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a7da4",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full max-w-[480px] mx-auto flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">GoalMuse</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#111618] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-2xl">help_outline</span>
+</button>
+</div>
+</div>
+<!-- Headline & Intro -->
+<div class="px-4 py-6">
+<h3 class="text-[#111618] dark:text-white tracking-tight text-2xl font-bold leading-tight text-center pb-2 font-display">Voice Selection</h3>
+<p class="text-[#60808a] dark:text-gray-400 text-base font-medium leading-normal text-center max-w-[280px] mx-auto">
+                Voice augments your board. Use one flow at a time.
+            </p>
+</div>
+<!-- Cards Container -->
+<div class="flex flex-col gap-4 p-4 @container">
+<!-- Morning Planning Card -->
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 transition-transform active:scale-[0.98]">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl overflow-hidden relative" data-alt="Warm sunrise over a calm mountain range">
+<div class="absolute inset-0 bg-gradient-to-br from-orange-100/40 to-primary/20"></div>
+<div class="absolute top-4 left-4 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">light_mode</span>
+</div>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-5 px-5">
+<p class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">Morning planning</p>
+<p class="text-[#60808a] dark:text-gray-400 text-sm font-normal leading-relaxed mb-4">
+                        Set your intentions and focus your energy for the day ahead.
+                    </p>
+<div class="flex items-center justify-end">
+<button class="w-full sm:w-auto flex min-w-[120px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-semibold leading-normal transition-colors hover:bg-primary/90">
+<span class="truncate">Start my day</span>
+</button>
+</div>
+</div>
+</div>
+<!-- End-of-day Reflection Card -->
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 transition-transform active:scale-[0.98]">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl overflow-hidden relative" data-alt="Clear night sky with crescent moon and stars">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 to-purple-900/40"></div>
+<div class="absolute top-4 left-4 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">dark_mode</span>
+</div>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-5 px-5">
+<p class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">End-of-day reflection</p>
+<p class="text-[#60808a] dark:text-gray-400 text-sm font-normal leading-relaxed mb-4">
+                        Review your progress and capture insights in your voice journal.
+                    </p>
+<div class="flex items-center justify-end">
+<button class="w-full sm:w-auto flex min-w-[120px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-semibold leading-normal transition-colors hover:bg-primary/90">
+<span class="truncate">Reflect on today</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Gentle Nudge Card -->
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 transition-transform active:scale-[0.98]">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover rounded-t-xl overflow-hidden relative" data-alt="Minimalist abstract circles representing sound waves">
+<div class="absolute inset-0 bg-gradient-to-br from-teal-100/40 to-blue-200/40"></div>
+<div class="absolute top-4 left-4 bg-white/90 dark:bg-black/50 backdrop-blur-sm p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">volume_up</span>
+</div>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-5 px-5">
+<p class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] font-display">Gentle nudge</p>
+<p class="text-[#60808a] dark:text-gray-400 text-sm font-normal leading-relaxed mb-4">
+                        A soft audio reminder of your most critical next action.
+                    </p>
+<div class="flex items-center justify-end">
+<button class="w-full sm:w-auto flex min-w-[120px] max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary text-white text-sm font-semibold leading-normal transition-colors hover:bg-primary/90">
+<span class="truncate">Read my next action</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacer -->
+<div class="h-10 bg-transparent"></div>
+<!-- Navigation Tab Placeholder (iOS Style) -->
+<div class="mt-auto pb-8 flex justify-center">
+<div class="w-32 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoalMuse Login Screen Variant 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .ios-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #f6f8f8 100%);
+        }
+        .dark .ios-gradient {
+            background: linear-gradient(180deg, #101d22 0%, #0a1215 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<!-- Main Container -->
+<div class="relative flex h-screen w-full flex-col ios-gradient overflow-hidden">
+<!-- Top App Bar - Fixed branding at top -->
+<div class="flex items-center justify-center p-6 pt-12">
+<div class="flex flex-col items-center gap-2">
+<div class="bg-primary p-2 rounded-xl">
+<span class="material-symbols-outlined text-white text-3xl">target</span>
+</div>
+<h1 class="text-[#111618] dark:text-white text-xl font-bold tracking-tight">GoalMuse</h1>
+</div>
+</div>
+<!-- Middle Spacer (Ensures content is pushed to the bottom for one-handed use) -->
+<div class="flex-grow"></div>
+<!-- Bottom Third Interactive Cluster -->
+<div class="w-full px-6 pb-12">
+<!-- Headline -->
+<div class="mb-6">
+<h2 class="text-[#111618] dark:text-white text-3xl font-bold leading-tight">Welcome back</h2>
+<p class="text-[#617f89] text-base mt-1">Sign in to continue your progress.</p>
+</div>
+<!-- Form Fields -->
+<div class="space-y-4">
+<!-- Email Field -->
+<div class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium leading-normal pb-2 px-1">Email</p>
+<input class="form-input flex w-full rounded-xl text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe3e6] dark:border-[#2d3a3f] bg-white dark:bg-[#1a2a30] h-14 placeholder:text-[#617f89] p-[15px] text-base font-normal transition-all" placeholder="hello@example.com" type="email" value=""/>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col w-full">
+<p class="text-[#111618] dark:text-white text-sm font-medium leading-normal pb-2 px-1">Password</p>
+<div class="flex w-full items-stretch relative">
+<input class="form-input flex w-full rounded-xl text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe3e6] dark:border-[#2d3a3f] bg-white dark:bg-[#1a2a30] h-14 placeholder:text-[#617f89] p-[15px] text-base font-normal transition-all" placeholder="Enter your password" type="password" value=""/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-[#617f89] flex items-center cursor-pointer">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+</div>
+</div>
+<!-- Forgot Password -->
+<div class="flex justify-end px-1">
+<p class="text-[#617f89] text-sm font-medium leading-normal hover:text-primary cursor-pointer transition-colors">Forgot password?</p>
+</div>
+<!-- Login Button -->
+<div class="pt-4">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98]">
+                        Log in
+                    </button>
+</div>
+</div>
+<!-- Bottom Footer Link -->
+<div class="mt-8 text-center">
+<p class="text-[#617f89] text-sm font-normal">
+                    Don't have an account? 
+                    <span class="text-primary font-bold cursor-pointer underline underline-offset-4 ml-1">Create account</span>
+</p>
+</div>
+<!-- iOS Home Indicator Safe Area Spacer -->
+<div class="h-6"></div>
+</div>
+</div>
+<!-- Background Pattern Decoration -->
+<div class="fixed top-0 right-0 -z-10 opacity-10 dark:opacity-5">
+<svg fill="none" height="400" viewbox="0 0 400 400" width="400" xmlns="http://www.w3.org/2000/svg">
+<circle cx="400" cy="0" fill="url(#paint0_radial)" r="400"></circle>
+<defs>
+<radialgradient cx="0" cy="0" gradienttransform="translate(400 0) rotate(135) scale(400)" gradientunits="userSpaceOnUse" id="paint0_radial" r="1">
+<stop stop-color="#13b6ec"></stop>
+<stop offset="1" stop-color="#13b6ec" stop-opacity="0"></stop>
+</radialgradient>
+</defs>
+</svg>
+</div>
+</body></html>

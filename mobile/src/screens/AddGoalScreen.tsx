@@ -1,0 +1,323 @@
+import React, { useCallback, useState } from 'react';
+import {
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+import { useAppState } from '../context/AppStateContext';
+import { AppBar } from '../components/AppBar';
+import { Icon } from '../components/Icon';
+import { copyToPersistentStorage, isLocalFileUri } from '../lib/goalImageStorage';
+import { colors } from '../theme/colors';
+
+type ParamList = { AddGoal: { boardId?: string }; AddGoalFromBoard: { boardId: string } };
+
+export function AddGoalScreen() {
+  const navigation = useNavigation<any>();
+  const route = useRoute<RouteProp<ParamList, 'AddGoal' | 'AddGoalFromBoard'>>();
+  const boardId = route.params?.boardId;
+  const { addGoal } = useAppState();
+  const [title, setTitle] = useState('');
+  const [imageUri, setImageUri] = useState('');
+  const [description, setDescription] = useState('');
+  const [targetDate, setTargetDate] = useState('');
+
+  const handleSave = () => {
+    if (!title.trim()) return;
+    addGoal({
+      boardId: boardId || 'b1',
+      title: title.trim(),
+      imageUri: imageUri.trim() || undefined,
+      description: description.trim() || undefined,
+      targetDate: targetDate.trim() || undefined,
+      completed: false,
+    });
+    navigation.goBack();
+  };
+
+  const getUriFromResult = (result: ImagePicker.ImagePickerResult | ImagePicker.ImagePickerErrorResult | null): string | null => {
+    if (!result || result.canceled) return null;
+    if ('errorCode' in result) return null;
+    const assets = (result as ImagePicker.ImagePickerSuccessResult).assets;
+    const uri = assets?.[0]?.uri ?? (result as { uri?: string }).uri;
+    return uri && typeof uri === 'string' ? uri : null;
+  };
+
+  const applyImageUri = useCallback((uri: string) => {
+    const timer = setTimeout(() => setImageUri(uri), 150);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const applyPickerResult = useCallback(async (uri: string | null) => {
+    if (!uri) return;
+    try {
+      const persistentUri = isLocalFileUri(uri)
+        ? await copyToPersistentStorage(uri, `goal-new-${Date.now()}.jpg`)
+        : uri;
+      applyImageUri(persistentUri);
+    } catch {
+      applyImageUri(uri);
+    }
+  }, [applyImageUri]);
+
+  const pickImageFromGallery = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'Allow access to your photos to choose a goal image.');
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: 'images',
+        allowsEditing: Platform.OS !== 'android',
+        aspect: [1, 1],
+        quality: 0.5,
+      });
+      const uri = getUriFromResult(result);
+      if (uri) await applyPickerResult(uri);
+    } catch (e) {
+      Alert.alert('Photo library', e instanceof Error ? e.message : 'Could not open photo library.');
+    }
+  };
+
+  const takePhoto = async () => {
+    try {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'Allow camera access to take a goal photo.');
+        return;
+      }
+      const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: Platform.OS !== 'android',
+        aspect: [1, 1],
+        quality: 0.5,
+      });
+      const uri = getUriFromResult(result);
+      if (uri) await applyPickerResult(uri);
+    } catch (e) {
+      Alert.alert('Camera', e instanceof Error ? e.message : 'Could not open camera.');
+    }
+  };
+
+  const clearImage = () => setImageUri('');
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <AppBar title="New goal" showBack onBack={() => navigation.goBack()} />
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.field}>
+          <Text style={styles.label}>Goal</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="e.g. Speak at a global event"
+            placeholderTextColor={colors.textMuted}
+            value={title}
+            onChangeText={setTitle}
+          />
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Goal image (optional)</Text>
+          {imageUri ? (
+            <>
+              <View style={styles.imagePreviewWrap}>
+                <Image
+                  key={imageUri}
+                  source={{ uri: imageUri }}
+                  style={styles.imagePreview}
+                  resizeMode="cover"
+                  onError={() => setImageUri('')}
+                />
+                <Pressable style={styles.removeImageBtn} onPress={clearImage}>
+                  <Icon name="close" size={20} color={colors.white} />
+                </Pressable>
+              </View>
+              <Text style={styles.imageHint}>Tap buttons below to replace</Text>
+            </>
+          ) : null}
+          <View style={styles.imageButtonRow}>
+            <Pressable style={styles.imageBtn} onPress={pickImageFromGallery}>
+              <Icon name="image" size={24} color={colors.primary} />
+              <Text style={styles.imageBtnText}>Choose from gallery</Text>
+            </Pressable>
+            <Pressable style={styles.imageBtn} onPress={takePhoto}>
+              <Icon name="camera_alt" size={24} color={colors.primary} />
+              <Text style={styles.imageBtnText}>Take photo</Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Description (optional)</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            placeholder="What does success look like?"
+            placeholderTextColor={colors.textMuted}
+            value={description}
+            onChangeText={setDescription}
+            multiline
+            numberOfLines={4}
+          />
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.label}>Target date (optional)</Text>
+          <View style={styles.dateRow}>
+            <TextInput
+              style={[styles.input, styles.dateInput]}
+              placeholder="YYYY-MM-DD"
+              placeholderTextColor={colors.textMuted}
+              value={targetDate}
+              onChangeText={setTargetDate}
+            />
+            <View style={styles.calendarIcon}>
+              <Icon name="calendar_today" size={24} color={colors.textMuted} />
+            </View>
+          </View>
+        </View>
+        <View style={styles.tip}>
+          <Icon name="lightbulb" size={24} color={colors.primary} />
+          <Text style={styles.tipText}>
+            Tip: Visualize your success while writing. Detail creates clarity.
+          </Text>
+        </View>
+      </ScrollView>
+      <View style={styles.footer}>
+        <Pressable style={styles.saveBtn} onPress={handleSave}>
+          <Text style={styles.saveBtnText}>Save goal</Text>
+        </Pressable>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: colors.backgroundLight },
+  scroll: { flex: 1 },
+  content: { padding: 16, paddingBottom: 24 },
+  field: { marginBottom: 24 },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 8,
+    paddingLeft: 4,
+  },
+  input: {
+    height: 56,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.white,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: colors.text,
+  },
+  textArea: {
+    height: 160,
+    paddingTop: 16,
+    textAlignVertical: 'top',
+  },
+  dateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.white,
+  },
+  dateInput: { flex: 1, borderWidth: 0 },
+  calendarIcon: { paddingRight: 16 },
+  imagePreviewWrap: {
+    position: 'relative',
+    width: '100%',
+    aspectRatio: 1,
+    maxHeight: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: colors.gray100,
+    marginBottom: 8,
+  },
+  imagePreview: { width: '100%', height: '100%' },
+  removeImageBtn: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageHint: {
+    fontSize: 12,
+    color: colors.textMuted,
+    marginBottom: 8,
+    paddingLeft: 4,
+  },
+  imageButtonRow: { flexDirection: 'row', gap: 12 },
+  imageBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    backgroundColor: colors.primaryLight,
+  },
+  imageBtnText: { fontSize: 14, fontWeight: '600', color: colors.primary },
+  tip: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: colors.primaryLight,
+    borderWidth: 1,
+    borderColor: colors.primary + '20',
+    marginTop: 16,
+  },
+  tipText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.primary,
+    lineHeight: 22,
+    opacity: 0.9,
+  },
+  footer: {
+    padding: 16,
+    paddingBottom: 32,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray200,
+    backgroundColor: colors.backgroundLight,
+  },
+  saveBtn: {
+    height: 56,
+    borderRadius: 12,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  saveBtnText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.white,
+  },
+});

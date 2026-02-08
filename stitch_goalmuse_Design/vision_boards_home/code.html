@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vision Boards Home - GoalMuse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#111618] dark:text-white antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-gray-200/50 dark:border-gray-800/50">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</div>
+<div class="flex-1 flex justify-center">
+<span class="text-primary font-bold text-lg tracking-tight">GoalMuse</span>
+</div>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-full size-10 bg-transparent text-[#111618] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex flex-col flex-1 overflow-y-auto pb-24">
+<!-- Header Section with Title and Add Button -->
+<div class="flex items-center justify-between px-6 pt-8 pb-4">
+<h1 class="text-[#111618] dark:text-white text-3xl font-bold leading-tight tracking-tight">My boards</h1>
+<button class="flex items-center justify-center gap-2 bg-primary text-white px-4 py-2 rounded-full shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-sm font-bold">add</span>
+<span class="text-sm font-semibold">New board</span>
+</button>
+</div>
+<!-- Vision Board Cards List -->
+<div class="px-4 space-y-4">
+<!-- Card 1 -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1a2b32] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 dark:border-gray-800">
+<div class="relative h-44 w-full bg-center bg-cover" data-alt="Breathtaking mountain sunrise reflecting on a lake" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBzjC-lUBe9s3MtMWET00qjVHwiYSpqb6xFzXaqdQtFoCV67-bK9fgfv6x11egedLm4541VokXqWeUlnWDVokogyQ4GG3LjnH2c_Q6PHlh4AXKgoDZuxtC5Wg8TjhPRA1uOlbQbKQkCbJr9YC8pnJxNsVD5b2qDVeR0AP7M5PTwIsId9Tue23kRjA4BsuV8EcT16hvsIMxhy1IPhqV9d5BMH5rHEpj8Z8l0XaoLwPpcisDNyCPGXiLDwdeiu0lIlzzAGuhOs2beZck");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<div class="flex items-center justify-between p-5">
+<div class="flex flex-col gap-0.5">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold">2025 Resolutions</h3>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-medium">12 goals active</p>
+</div>
+<button class="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1a2b32] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 dark:border-gray-800">
+<div class="relative h-44 w-full bg-center bg-cover" data-alt="Modern clean workspace with laptop and plants" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9JaV5bTDAQyXYEx9Gx19BLVGh5-qv6ZIyIY11T78xoGkesLdxn8ULkUKBPYqWUsgl9NisvJI66sJ_z_C7i-UxPGnUBpWH_cvT4dKkzlkKUmktojAqCzMi-_q3NNkn2JMGg9m81QrczUW4CDpWBiI26PEs_G7GhzpiVhym-Xiky211VGgSa9PYSSrvvhdp2_RmgmLEQDv7MAV_8fJefj_uzMby5QNpZ4NbdSPdWlDEDFrxOuv5aGkiBFCk7N9242eFLLqVpIbZ-AA");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<div class="flex items-center justify-between p-5">
+<div class="flex flex-col gap-0.5">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold">Career &amp; Growth</h3>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-medium">5 goals active</p>
+</div>
+<button class="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1a2b32] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 dark:border-gray-800">
+<div class="relative h-44 w-full bg-center bg-cover" data-alt="Minimalist cozy interior of a dream home" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAq4P0RTpytGP8uHOe4Y6n6EWs3coVLONs3v192SZNVS6TVlVRD5U0W3TyFIXr8pQOjLQeQ3IDglwRKwrPYImse7f5rRwqdMI1Lf9OhL2X0nnr9RIQ-SdSqV1VQxi3Nkumjnp_T0EOHhPunxjcZ8TO7faQa-C9gGbFCJAWmFT1nfR2WFKqioDxdxCj6y68QYcVi5i1z0M6cqrZcrQumqPukfuK3B0NVbky0M6pAHspz5sK4ab_NwdrgmpzNekQD93JyvvTrTOn3ZkM");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<div class="flex items-center justify-between p-5">
+<div class="flex flex-col gap-0.5">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold">Dream Home</h3>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-medium">8 goals active</p>
+</div>
+<button class="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary hover:text-white">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 4 (Empty State Style Placeholder) -->
+<div class="flex flex-col gap-0 rounded-xl bg-primary/5 dark:bg-primary/10 border-2 border-dashed border-primary/20 p-8 items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-primary/40 mb-2">dashboard_customize</span>
+<p class="text-sm font-medium text-primary/60">Create a new themed vision board to organize your aspirations.</p>
+</div>
+</div>
+</div>
+<!-- Bottom Tab Bar (iOS Style) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-gray-100 dark:border-gray-800 flex justify-around items-center h-20 pb-4 px-6">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[28px] fill-[1]">grid_view</span>
+<span class="text-[10px] font-bold">Boards</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">track_changes</span>
+<span class="text-[10px] font-medium">Progress</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">explore</span>
+<span class="text-[10px] font-medium">Discover</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</div>
+</div>
+</div>
+</body></html>

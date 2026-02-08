@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tasks and Journal Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex justify-center font-display">
+<div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col bg-background-light dark:bg-background-dark overflow-x-hidden shadow-2xl border-x border-gray-100 dark:border-gray-800">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">GoalMuse</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#111618] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Segmented Control (Tabs) -->
+<div class="flex px-4 py-3">
+<div class="flex h-12 flex-1 items-center justify-center rounded-xl bg-gray-200/50 dark:bg-gray-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-[#111618] dark:has-[:checked]:text-white text-gray-500 dark:text-gray-400 text-sm font-semibold transition-all">
+<span class="truncate">Tasks</span>
+<input checked="" class="invisible w-0" name="view-toggle" type="radio" value="Tasks"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-[#111618] dark:has-[:checked]:text-white text-gray-500 dark:text-gray-400 text-sm font-semibold transition-all">
+<span class="truncate">Journal</span>
+<input class="invisible w-0" name="view-toggle" type="radio" value="Journal"/>
+</label>
+</div>
+</div>
+<!-- Quick Add Section (Tasks) -->
+<div class="flex flex-col gap-4 px-4 py-3">
+<div class="flex w-full items-stretch rounded-xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none border-none bg-transparent focus:ring-0 h-14 placeholder:text-gray-400 text-[#111618] dark:text-white p-[15px] text-base font-normal leading-normal" placeholder="Add a new goal for today..." value=""/>
+<button class="bg-primary text-white flex items-center justify-center px-4 transition-colors hover:bg-primary/90">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+<!-- Tasks List Section -->
+<div class="px-4">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3 pt-4">Daily Focus</h3>
+<div class="flex flex-col gap-2">
+<!-- Task Item 1 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex size-7 items-center justify-center">
+<input checked="" class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all" type="checkbox"/>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1 line-through opacity-50">Morning meditation (10 min)</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">more_horiz</span>
+</div>
+</div>
+<!-- Task Item 2 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex size-7 items-center justify-center">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all" type="checkbox"/>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1">Read 20 pages of "Deep Work"</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">more_horiz</span>
+</div>
+</div>
+<!-- Task Item 3 -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex size-7 items-center justify-center">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all" type="checkbox"/>
+</div>
+<p class="text-[#111618] dark:text-white text-base font-medium flex-1">Plan upcoming vision board</p>
+<div class="shrink-0 text-gray-400">
+<span class="material-symbols-outlined">more_horiz</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Journal Section (Visible when Journal is selected) -->
+<div class="px-4 mt-8 pb-10">
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3">Today's Reflection</h3>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col gap-3">
+<textarea class="w-full min-h-[120px] bg-background-light dark:bg-gray-900 border-none rounded-lg p-3 text-sm focus:ring-1 focus:ring-primary text-[#111618] dark:text-white placeholder:text-gray-400" placeholder="What did you do today? How did you feel about your progress?"></textarea>
+<button class="bg-primary text-white font-bold py-3 rounded-lg shadow-md hover:bg-primary/90 transition-all active:scale-95">Save Entry</button>
+</div>
+<!-- Previous Entries -->
+<h3 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3 pt-8">Recent Entries</h3>
+<div class="flex flex-col gap-4">
+<div class="p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Yesterday</span>
+<span class="text-xs text-gray-400">Oct 24, 2023</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">Spent the afternoon sketching out my career goals for the next 5 years. Feeling inspired and focused on the path ahead...</p>
+</div>
+<div class="p-4 rounded-xl bg-white/50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-gray-500">Wednesday</span>
+<span class="text-xs text-gray-400">Oct 23, 2023</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">A bit of a slow start, but managed to finish the yoga session. Tomorrow will be more productive. Focused on consistency...</p>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<div class="mt-auto border-t border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md px-6 py-3 flex justify-between items-center sticky bottom-0">
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] mt-1">Vision</span>
+</button>
+<button class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<span class="text-[10px] mt-1">Growth</span>
+</button>
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="text-[10px] mt-1">Stats</span>
+</button>
+<button class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] mt-1">Profile</span>
+</button>
+</div>
+</div>
+</body></html>

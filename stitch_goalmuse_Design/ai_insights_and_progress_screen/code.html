@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoalMuse AI Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a7da4",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto overflow-x-hidden border-x border-slate-200 dark:border-slate-800 shadow-2xl">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center font-display">AI Insights</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-12 bg-transparent text-slate-900 dark:text-white p-0">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2 px-4 pt-2">
+<!-- Hero Stats Card -->
+<div class="flex flex-col gap-6 rounded-xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b2427] shadow-sm">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<p class="text-slate-500 dark:text-[#9cb2ba] text-sm font-medium uppercase tracking-wider">Progress confidence</p>
+<p class="text-slate-900 dark:text-white text-5xl font-bold leading-tight font-display tracking-tight">72<span class="text-primary text-2xl">/100</span></p>
+</div>
+<div class="bg-primary/10 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+</div>
+</div>
+<!-- TextGrid inside Hero -->
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1 p-3 rounded-lg bg-slate-50 dark:bg-[#111618] border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<h2 class="text-slate-900 dark:text-white text-xs font-bold leading-tight">Completion</h2>
+</div>
+<p class="text-primary text-lg font-bold">80%</p>
+</div>
+<div class="flex flex-col gap-1 p-3 rounded-lg bg-slate-50 dark:bg-[#111618] border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-lg">repeat</span>
+<h2 class="text-slate-900 dark:text-white text-xs font-bold leading-tight">Consistency</h2>
+</div>
+<p class="text-primary text-lg font-bold">65%</p>
+</div>
+<div class="flex flex-col gap-1 p-3 rounded-lg bg-slate-50 dark:bg-[#111618] border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-lg">target</span>
+<h2 class="text-slate-900 dark:text-white text-xs font-bold leading-tight">Alignment</h2>
+</div>
+<p class="text-primary text-lg font-bold">90%</p>
+</div>
+<div class="flex flex-col gap-1 p-3 rounded-lg bg-slate-50 dark:bg-[#111618] border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-lg">lightbulb</span>
+<h2 class="text-slate-900 dark:text-white text-xs font-bold leading-tight">Clarity</h2>
+</div>
+<p class="text-primary text-lg font-bold">50%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Overall Progress -->
+<div class="px-4 pt-6">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight font-display mb-3 px-1">Current progress</h3>
+<div class="flex flex-col items-stretch justify-start rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b2427] overflow-hidden">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="Minimalist abstract goal tracking visual" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxCgUnF9nQRJkgYgYeVlUpT9o2l-S0_6VxemOnhDZiY-rccce_ZbvKnO3PaHASn5_UuGA6Su1zIHodY-ScQ-hrNDrJeKb5bh2Uz7_o7jVVZ1jFbcFAa1axoFFdX7_OYsQi8ZPRHGkWgn8RQYYK8cNTzRhLtJFr90XXPDH-aeU9S4c04VaRTsnVno2xoprQb-Bnk9TUD_TA3PHHa75ld3RUmgaypp5keAp3zdS-Ooptm7MUld2c2tIDRXJTlTiDU7GYexXsKBoSPqo");'></div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-3 p-4">
+<div class="flex justify-between items-center">
+<p class="text-slate-900 dark:text-white text-base font-bold leading-tight font-display">Task completion</p>
+<span class="text-primary font-bold text-sm">60%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-[#111618] h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+<p class="text-slate-500 dark:text-[#9cb2ba] text-sm font-normal leading-normal">6 of 10 tasks completed this week</p>
+</div>
+</div>
+</div>
+<!-- Section: By Goal -->
+<div class="px-4 pt-6">
+<div class="flex justify-between items-center px-1 mb-3">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight font-display">By goal</h3>
+<span class="text-xs text-slate-400 font-medium">SEE ALL</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b2427]">
+<div class="flex justify-between items-center">
+<h4 class="text-slate-900 dark:text-white font-medium text-sm">Healthy Lifestyle</h4>
+<span class="text-xs font-bold text-slate-400">3/5 tasks</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-[#111618] h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1b2427]">
+<div class="flex justify-between items-center">
+<h4 class="text-slate-900 dark:text-white font-medium text-sm">Career Growth</h4>
+<span class="text-xs font-bold text-slate-400">2/4 tasks</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-[#111618] h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Synergy Insight -->
+<div class="px-4 pt-6">
+<div class="flex flex-col gap-4 p-5 rounded-xl border border-primary/20 bg-primary/5 dark:bg-primary/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">hub</span>
+<h3 class="text-slate-900 dark:text-white text-base font-bold font-display">Goal synergy</h3>
+</div>
+<p class="text-slate-600 dark:text-[#9cb2ba] text-sm leading-relaxed">
+                    Your meditation habit is boosting your focus for the <span class="text-primary font-bold">Career Growth</span> goal. Tasks are being completed 15% faster after your morning sessions.
+                </p>
+</div>
+</div>
+<!-- Next Action Card (Highlighted) -->
+<div class="px-4 pt-6">
+<div class="flex flex-col gap-4 p-6 rounded-xl bg-primary shadow-lg shadow-primary/20 relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-20">
+<span class="material-symbols-outlined text-8xl text-white">bolt</span>
+</div>
+<div class="relative z-10">
+<span class="inline-block px-2 py-1 rounded bg-white/20 text-white text-[10px] font-bold tracking-widest uppercase mb-3">AI Recommendation</span>
+<h3 class="text-white text-xl font-bold font-display mb-1">Next action</h3>
+<p class="text-white/90 text-sm mb-4">Complete 15-minute Project Review</p>
+<div class="flex flex-col gap-2 p-3 rounded-lg bg-black/10 border border-white/20">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-white text-sm mt-0.5">info</span>
+<p class="text-white text-xs leading-tight">Reason: This bridges the gap between your weekly output and your 'Career Growth' milestone.</p>
+</div>
+</div>
+<button class="w-full mt-4 bg-white text-primary font-bold py-3 rounded-lg text-sm shadow-md active:scale-95 transition-transform">
+                        START NOW
+                    </button>
+</div>
+</div>
+</div>
+<!-- Feedback Section -->
+<div class="px-4 pt-8 pb-12">
+<div class="flex flex-col items-center gap-4 text-center">
+<p class="text-slate-500 dark:text-[#9cb2ba] text-sm font-medium">Did these insights help today?</p>
+<div class="flex gap-2 w-full">
+<button class="flex-1 py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white text-xs font-bold bg-white dark:bg-[#1b2427] hover:bg-slate-50 dark:hover:bg-[#253237]">
+                        NO
+                    </button>
+<button class="flex-1 py-3 px-4 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-white text-xs font-bold bg-white dark:bg-[#1b2427] hover:bg-slate-50 dark:hover:bg-[#253237]">
+                        SOMEWHAT
+                    </button>
+<button class="flex-1 py-3 px-4 rounded-lg border border-primary/50 text-primary text-xs font-bold bg-primary/5 dark:bg-primary/20">
+                        YES
+                    </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Spacer (iOS Home Indicator) -->
+<div class="h-8 bg-transparent"></div>
+</div>
+</body></html>

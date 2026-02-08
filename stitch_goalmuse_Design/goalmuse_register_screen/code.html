@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11d4d4",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#102222",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>GoalMuse Register</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111818] dark:text-white">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-[480px] mx-auto">
+<!-- Header / Navigation -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-[#111818] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-[28px]">arrow_back</span>
+</div>
+<div class="size-12 shrink-0"></div> <!-- Spacer for balance -->
+</div>
+<!-- Hero Text -->
+<div class="px-6 pt-10 pb-6">
+<h1 class="text-[#111818] dark:text-white tracking-tight text-[32px] font-bold leading-tight mb-2">Create account</h1>
+<p class="text-[#618989] dark:text-gray-400 text-lg font-normal leading-normal">Start your vision board.</p>
+</div>
+<!-- Registration Form -->
+<div class="flex flex-col gap-6 px-6 py-4">
+<!-- Email Field -->
+<label class="flex flex-col w-full">
+<p class="text-[#111818] dark:text-white text-base font-medium leading-normal pb-2">Email</p>
+<input class="form-input flex w-full rounded-xl text-[#111818] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe6e6] dark:border-[#2d4444] bg-white dark:bg-[#1a2e2e] h-14 placeholder:text-[#618989] p-[15px] text-base font-normal leading-normal" placeholder="example@email.com" type="email"/>
+</label>
+<!-- Password Field -->
+<label class="flex flex-col w-full">
+<p class="text-[#111818] dark:text-white text-base font-medium leading-normal pb-2">Password</p>
+<div class="flex w-full items-stretch relative">
+<input class="form-input flex w-full rounded-xl text-[#111818] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe6e6] dark:border-[#2d4444] bg-white dark:bg-[#1a2e2e] h-14 placeholder:text-[#618989] p-[15px] text-base font-normal leading-normal pr-12" placeholder="Enter your password" type="password"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-[#618989] flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+</div>
+</label>
+<!-- Terms & Conditions (Implicit for registration screens) -->
+<p class="text-xs text-[#618989] dark:text-gray-500 text-center px-4 leading-relaxed">
+                By creating an account, you agree to our <span class="text-primary font-medium">Terms of Service</span> and <span class="text-primary font-medium">Privacy Policy</span>.
+            </p>
+<!-- Primary Action Button -->
+<div class="pt-4">
+<button class="w-full bg-primary hover:bg-[#0ebbb2] text-[#102222] font-bold text-lg h-14 rounded-xl transition-colors duration-200 shadow-sm">
+                    Create account
+                </button>
+</div>
+</div>
+<!-- Divider -->
+<div class="flex items-center px-6 py-6">
+<div class="flex-grow border-t border-[#dbe6e6] dark:border-[#2d4444]"></div>
+<span class="px-4 text-sm text-[#618989]">or join with</span>
+<div class="flex-grow border-t border-[#dbe6e6] dark:border-[#2d4444]"></div>
+</div>
+<!-- Social Login Placeholder -->
+<div class="flex justify-center gap-4 px-6 pb-12">
+<button class="flex-1 flex items-center justify-center h-14 rounded-xl border border-[#dbe6e6] dark:border-[#2d4444] bg-white dark:bg-[#1a2e2e] hover:bg-gray-50 transition-colors">
+<img alt="Google" class="w-6 h-6" data-alt="Google company logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGulFVH1WrkLly23wgiuwmc1S_ox-nDtvCkzhNA4KrMFQHqo8BMCJ454Nu_qsqSbNlzSx2RE3iTUjgM9jorqZ_3L7OfypCdlwjKGKe1UCGIIr7aXKsajc-r8k8-_Nx6_2JITkytO1gpAHYjdhJ8QpbolDpEFN5L65RS80bKLu5xW7bnL_ZYGcnWUHTC1bd2igK0jZq5bpn3jhvNPUP3psGe9gtCkivqyjMyPGKIllw371P6uNvZ4PfB6Qlen30KB2wIGv7KUzQ3M8"/>
+</button>
+<button class="flex-1 flex items-center justify-center h-14 rounded-xl border border-[#dbe6e6] dark:border-[#2d4444] bg-white dark:bg-[#1a2e2e] hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-[28px] text-[#111818] dark:text-white">ios</span>
+</button>
+</div>
+<!-- Footer Footer -->
+<div class="mt-auto pb-10 text-center">
+<p class="text-base text-[#111818] dark:text-white">
+                Already have an account? 
+                <a class="text-primary font-semibold hover:underline" href="#">Log in</a>
+</p>
+</div>
+<!-- Background Accents (Minimal Vision Board feel) -->
+<div class="absolute top-0 right-0 -z-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute bottom-10 left-0 -z-10 w-64 h-64 bg-primary/10 rounded-full blur-[80px]"></div>
+</div>
+</body></html>

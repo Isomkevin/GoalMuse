@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoalMuse Goals List View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a7ea4",
+                        "background-light": "#fdfdfd",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111618] dark:text-white font-display">
+<!-- Status Bar Spacer (iOS) -->
+<div class="h-12 w-full bg-background-light dark:bg-background-dark"></div>
+<!-- Top Navigation Bar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-3 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+<h2 class="text-[#111618] dark:text-white text-xl font-bold leading-tight tracking-tight">Goals</h2>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-[#111618] dark:text-white">search</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-[#111618] dark:text-white">more_horiz</span>
+</button>
+</div>
+</div>
+<main class="flex flex-col w-full max-w-md mx-auto min-h-screen">
+<!-- Add Goal Action -->
+<div class="flex px-4 py-6">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-14 px-5 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+<span>Add goal</span>
+</button>
+</div>
+<!-- Section Header -->
+<div class="px-4 pb-2">
+<h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Active Vision Board</h3>
+</div>
+<!-- Goals List -->
+<div class="flex flex-col gap-4 px-4 pb-24">
+<!-- List Item 1 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-[#1a2b32] p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="flex justify-between items-start gap-4">
+<div class="flex gap-4 items-start">
+<div class="flex mt-1">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111618] dark:text-white text-lg font-semibold leading-snug">Launch Visionary Portfolio</p>
+<p class="text-primary text-xs font-bold uppercase tracking-wide mt-1">High Priority</p>
+</div>
+</div>
+</div>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                    Complete all case studies and finalize the personal branding guide for the Q4 launch.
+                </p>
+<div class="flex items-center justify-between pt-2 border-t border-gray-50 dark:border-gray-800 mt-1">
+<div class="flex items-center gap-1.5 text-[#617f89] dark:text-gray-500">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<p class="text-xs font-medium">By Dec 31, 2025</p>
+</div>
+<div class="flex -space-x-2">
+<div class="size-6 rounded-full bg-gray-200 border-2 border-white dark:border-[#1a2b32] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young professional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ2FYJbrIL4JwslhDfq3vNf8dm5AZ-ZI8sYuQ48jKNtR07jZMOeGI9r9JZceERtevT24wSDt0vzTrH_gtx7tioyiuJHJFIFqgS-z9a3c-ayoxYnzDruaKjVxyQnBu2NHQMEFT2B4z-tw0mMX7OR-ppRpa1Gwec_iceWeL_sJwXgB5jybKTqUGIQQz24EXPt4iy59o4TnP90zwJNSntoV20Ouzi0guvKVOdX6cCpQhCqQz_QANpqdna6UQ8rFOGygg50hve_idkE88"/>
+</div>
+</div>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-[#1a2b32] p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="flex justify-between items-start gap-4">
+<div class="flex gap-4 items-start">
+<div class="flex mt-1">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111618] dark:text-white text-lg font-semibold leading-snug">Master Mindfulness</p>
+<p class="text-[#617f89] dark:text-gray-400 text-xs font-bold uppercase tracking-wide mt-1">Wellness</p>
+</div>
+</div>
+</div>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                    Complete 30 consecutive days of morning meditation and evening journaling sessions.
+                </p>
+<div class="flex items-center justify-between pt-2 border-t border-gray-50 dark:border-gray-800 mt-1">
+<div class="flex items-center gap-1.5 text-[#617f89] dark:text-gray-500">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<p class="text-xs font-medium">By Nov 15, 2025</p>
+</div>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-[#1a2b32] p-5 rounded-xl border border-gray-100 dark:border-gray-800 custom-shadow">
+<div class="flex justify-between items-start gap-4">
+<div class="flex gap-4 items-start">
+<div class="flex mt-1">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-600 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111618] dark:text-white text-lg font-semibold leading-snug">Quarterly Financial Review</p>
+<p class="text-[#617f89] dark:text-gray-400 text-xs font-bold uppercase tracking-wide mt-1">Finance</p>
+</div>
+</div>
+</div>
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                    Analyze spending patterns and adjust the automated savings plan for the upcoming Q4 period.
+                </p>
+<div class="flex items-center justify-between pt-2 border-t border-gray-50 dark:border-gray-800 mt-1">
+<div class="flex items-center gap-1.5 text-[#617f89] dark:text-gray-500">
+<span class="material-symbols-outlined text-base">calendar_today</span>
+<p class="text-xs font-medium">By Oct 30, 2025</p>
+</div>
+</div>
+</div>
+<!-- List Item 4 (Completed State Example) -->
+<div class="flex flex-col gap-3 bg-gray-50/50 dark:bg-gray-800/20 p-5 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-start gap-4">
+<div class="flex gap-4 items-start opacity-60">
+<div class="flex mt-1">
+<input checked="" class="h-6 w-6 rounded-full border-primary border-2 bg-primary text-white focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111618] dark:text-white text-lg font-semibold leading-snug line-through">Morning Yoga Routine</p>
+<p class="text-[#617f89] dark:text-gray-400 text-xs font-bold uppercase tracking-wide mt-1">Wellness</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Bar (iOS style) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 px-6 pb-8 pt-3">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">Board</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-medium">Insights</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</div>
+</div>
+</body></html>

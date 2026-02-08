@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Goals List View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ecda",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#102220",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111817] dark:text-white font-display">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[480px] mx-auto shadow-2xl bg-white dark:bg-background-dark">
+<!-- Top Navigation Bar -->
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#111817] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</div>
+<h2 class="text-[#111817] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Goals</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-xl h-12 bg-transparent text-[#111817] dark:text-white">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto pb-20">
+<!-- Add Goal Action -->
+<div class="flex px-4 py-6">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-primary text-[#102220] gap-2 text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">Add goal</span>
+</button>
+</div>
+<div class="px-4 pb-2">
+<h3 class="text-[#111817] dark:text-white text-sm font-semibold uppercase tracking-widest opacity-60 px-1">Active Vision Board</h3>
+</div>
+<!-- Goals List -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Goal Card 1 -->
+<div class="flex flex-col bg-white dark:bg-[#1a2e2c] border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="A person running on a scenic track" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-ZKLWxKLMRplfW7QVD4njLYAOdavBOZM_pjkOARnk0hcW-iSb6Jm3BagOFqEJJ1CNsU3nKNT3Gw3HiyP-PtoL45IbcJDrmoR-Zo3UsL7SSgBimux0SpVpTO1VKe_zXNiOlu8c8V-UfC_5cX0rkpqc0oW9zkeEHFSb_SiE0DCNNM0khJYNOjAgLkGc2k-Umr9qEiBwbY10he0AUzaiJbPUBCKt5bfpAe5nz3Dyq5n2OhGnAmIyLK_enNYsXletob1A-bGXvrcbquc");'></div>
+<div class="flex flex-col p-4 gap-2">
+<div class="flex justify-between items-start">
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Target: Dec 2024</p>
+<span class="material-symbols-outlined text-gray-400 text-sm">more_horiz</span>
+</div>
+<p class="text-[#111817] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Run a Marathon</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                            Training for the annual city marathon. Consistency is key for building long-distance endurance.
+                        </p>
+<div class="flex items-center mt-2 pt-2 border-t border-gray-50 dark:border-gray-700/50">
+<div class="h-1.5 flex-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+<span class="ml-3 text-xs font-medium text-gray-500 dark:text-gray-400">65%</span>
+</div>
+</div>
+</div>
+<!-- Goal Card 2 -->
+<div class="flex flex-col bg-white dark:bg-[#1a2e2c] border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="Traditional Japanese architecture and cherry blossoms" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBP9ACQ90yimgj6BY381RV-jJJozEICglqLQlP50iq4uySw1NHzhnQkgXOib5XNJ4Px3C-Pg0DFiqtxxbPegjAOQNisZnvEVdA3eH5esiJMKQxXOQnfVR4D4FpD9Yrz7Wbv7YVSu2MTt1vLHEMUyqoBY2QKAnM5U4urP2IIQ63h4Ufx2JXg5LId7hP1aNs6Zga4smAD-CD4cTc3HPyf7v249jEvQR2vPm2OpEC099oEuoSreB5jkBxGVqVyibQELYcuE_rT3Z8H9ME");'></div>
+<div class="flex flex-col p-4 gap-2">
+<div class="flex justify-between items-start">
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Target: May 2025</p>
+<span class="material-symbols-outlined text-gray-400 text-sm">more_horiz</span>
+</div>
+<p class="text-[#111817] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Learn Japanese</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                            Reach N3 proficiency level to travel through Tokyo and Kyoto comfortably next year.
+                        </p>
+<div class="flex items-center mt-2 pt-2 border-t border-gray-50 dark:border-gray-700/50">
+<div class="h-1.5 flex-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[30%] rounded-full"></div>
+</div>
+<span class="ml-3 text-xs font-medium text-gray-500 dark:text-gray-400">30%</span>
+</div>
+</div>
+</div>
+<!-- Goal Card 3 -->
+<div class="flex flex-col bg-white dark:bg-[#1a2e2c] border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="Modern interior design with a minimalist aesthetic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT8NCmZrRPfFEHgUFrQeKCPT1gBRayDzRjuKEsif8pE209DPK_eq9c0fYZVbCU60XO2kEEv979S63Oi0byxB55Cdeo07ePkdM9OrMNjCLftETRHepBsUJl97nZLC1LvUDxfkQ-sqlyQIf5f4w8cxVpDxMiyf8melrNd9By0a85dU3Kn-j9zcXXlAwxgAiBBfD87J_K_HQTvEtrvOWI-MYX2bNEjutUWH3hDApphcXIw-kr0v8AtyMLM1LFjwpXD86F5VV-qs3Klw4");'></div>
+<div class="flex flex-col p-4 gap-2">
+<div class="flex justify-between items-start">
+<p class="text-primary text-xs font-bold uppercase tracking-wider">Target: Aug 2024</p>
+<span class="material-symbols-outlined text-gray-400 text-sm">more_horiz</span>
+</div>
+<p class="text-[#111817] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">New Apartment</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-relaxed line-clamp-2">
+                            Save for a down payment on a minimalist studio in the city center.
+                        </p>
+<div class="flex items-center mt-2 pt-2 border-t border-gray-50 dark:border-gray-700/50">
+<div class="h-1.5 flex-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+<span class="ml-3 text-xs font-medium text-gray-500 dark:text-gray-400">85%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab Bar (iOS style) -->
+<div class="h-20 bg-white/80 dark:bg-background-dark/80 backdrop-blur-lg border-t border-gray-100 dark:border-gray-800 flex items-center justify-around px-6 pb-2">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<span class="text-[10px] font-medium">Board</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined text-2xl">list_alt</span>
+<span class="text-[10px] font-medium">Goals</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined text-2xl">insights</span>
+<span class="text-[10px] font-medium">Stats</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</div>
+</div>
+</div>
+</body></html>

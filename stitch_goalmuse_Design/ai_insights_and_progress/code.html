@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Insights and Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden max-w-[430px] mx-auto shadow-2xl">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center cursor-pointer" data-icon="arrow_back">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">GoalMuse AI</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#111618] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<div class="text-[#111618] dark:text-white" data-icon="settings">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Main Scrollable Content -->
+<div class="flex flex-col pb-10">
+<!-- Progress Confidence Section -->
+<h2 class="text-[#111618] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Progress Confidence</h2>
+<div class="px-4 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-start shadow-sm bg-white dark:bg-gray-900 overflow-hidden border border-gray-100 dark:border-gray-800">
+<!-- Score Visualization -->
+<div class="w-full bg-gradient-to-br from-primary/20 to-primary flex flex-col items-center justify-center aspect-video relative" data-alt="Abstract soft blue gradient for focus">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-32 h-32 rounded-full border-8 border-white/30 flex items-center justify-center">
+<div class="w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-lg">
+<span class="text-3xl font-bold text-primary">72<span class="text-sm text-gray-400">/100</span></span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-5 px-5">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
+<p class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Stable Momentum</p>
+</div>
+<div class="flex items-end gap-3 justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-normal leading-normal">Your likelihood of reaching your quarterly vision is high. Keep up the consistent morning habits.</p>
+</div>
+</div>
+<button class="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal shadow-md active:scale-95 transition-transform">
+<span class="truncate">Full AI Breakdown</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Overall Tasks -->
+<h2 class="text-[#111618] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-6">Overall Progress</h2>
+<div class="flex flex-col gap-3 px-4 py-4 mx-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-[#111618] dark:text-white text-base font-semibold leading-normal">Total tasks completed</p>
+<p class="text-primary text-sm font-bold leading-normal">60%</p>
+</div>
+<div class="rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden h-3">
+<div class="h-3 rounded-full bg-primary" style="width: 60%;"></div>
+</div>
+<p class="text-[#617f89] dark:text-gray-400 text-xs font-normal leading-normal">12 of 20 tasks completed this month</p>
+</div>
+<!-- By Goal Progress -->
+<h2 class="text-[#111618] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-6">Progress by Goal</h2>
+<div class="grid grid-cols-1 gap-3 px-4">
+<!-- Goal Card 1 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+<div class="size-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<p class="text-[#111618] dark:text-white text-sm font-bold">Marathon Training</p>
+<span class="text-xs font-medium text-gray-500">85%</span>
+</div>
+<div class="h-1.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-orange-500 rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+<!-- Goal Card 2 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800">
+<div class="size-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<p class="text-[#111618] dark:text-white text-sm font-bold">Financial Freedom</p>
+<span class="text-xs font-medium text-gray-500">42%</span>
+</div>
+<div class="h-1.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Next Action Highlight -->
+<h2 class="text-[#111618] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-6">AI Recommended Action</h2>
+<div class="px-4">
+<div class="relative bg-primary text-white p-5 rounded-xl shadow-lg overflow-hidden">
+<!-- Decorative Circle -->
+<div class="absolute -right-10 -top-10 size-32 bg-white/10 rounded-full"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined">bolt</span>
+<span class="text-xs font-bold uppercase tracking-wider">High Impact Move</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Schedule your deep-work block</h3>
+<p class="text-white/90 text-sm leading-relaxed">
+                            Based on your recent fatigue scores, moving your study session to 8 AM Tuesday will increase your focus by 40%.
+                        </p>
+<button class="mt-4 bg-white text-primary px-4 py-2 rounded-lg text-sm font-bold active:bg-gray-100 transition-colors">
+                            Add to Calendar
+                        </button>
+</div>
+</div>
+</div>
+<!-- Feedback Section -->
+<div class="mt-8 px-4 py-6 border-t border-gray-100 dark:border-gray-800 flex flex-col items-center gap-4">
+<p class="text-[#617f89] dark:text-gray-400 text-sm font-medium">Did these insights help today?</p>
+<div class="flex gap-4">
+<button class="flex items-center justify-center size-12 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-gray-500">thumb_up</span>
+</button>
+<button class="flex items-center justify-center size-12 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-gray-500">thumb_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Tab Bar (Simulated) -->
+<div class="sticky bottom-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-100 dark:border-gray-800 px-6 py-3 flex justify-between items-center">
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] mt-1">Board</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] mt-1">Insights</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-[10px] mt-1">Action</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="text-[10px] mt-1">Goals</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] mt-1">Profile</span>
+</div>
+</div>
+</div>
+</body></html>

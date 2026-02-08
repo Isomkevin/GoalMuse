@@ -1,0 +1,68 @@
+# Exclude from repo
+docs/
+backend/
+stitch_goalmuse_Design/
+
+# Dependencies
+node_modules/
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.egg
+
+# Build / dist
+dist/
+build/
+web-build/
+*.tsbuildinfo
+
+# Expo / React Native
+.expo/
+.metro-health-check*
+/ios
+/android
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+.kotlin/
+expo-env.d.ts
+
+# Environment & secrets
+.env
+.env.*
+.env*.local
+*.pem
+
+# Database (local dev)
+*.db
+*.sqlite3
+
+# IDE & editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Optional: keep package-lock.json and requirements.txt committed
+# (no entries needed; they are tracked by default)

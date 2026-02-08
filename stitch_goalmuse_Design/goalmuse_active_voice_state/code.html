@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoalMuse Active Voice State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0a81a9",
+              "background-light": "#f5f8f8",
+              "background-dark": "#101e22",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      /* Custom background for the dimmed effect behind the card */
+      .bg-overlay {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto shadow-2xl">
+<!-- TopAppBar / Sticky Banner -->
+<div class="z-20 flex items-center bg-white/90 dark:bg-background-dark/90 backdrop-blur-md p-4 pb-3 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-primary flex size-8 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">close</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1 rounded-full bg-primary/10">
+<span class="material-symbols-outlined text-primary text-sm">pause_circle</span>
+<p class="text-primary text-sm font-bold leading-normal tracking-wide">Stop playback</p>
+</div>
+<div class="w-8"></div>
+</div>
+<!-- Background Content (Dimmed) -->
+<div class="flex-1 overflow-y-auto p-4 opacity-50 grayscale-[20%]">
+<div class="h-4"></div>
+<!-- Mock Background Section -->
+<h4 class="text-[#60808a] dark:text-gray-400 text-sm font-bold leading-normal tracking-[0.05em] uppercase mb-4">Your Vision</h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-xl bg-gray-200 dark:bg-gray-800" data-alt="blurred vision board image placeholder"></div>
+<div class="aspect-square rounded-xl bg-gray-200 dark:bg-gray-800" data-alt="blurred vision board image placeholder"></div>
+<div class="aspect-[4/3] rounded-xl bg-gray-200 dark:bg-gray-800 col-span-2" data-alt="blurred vision board image placeholder"></div>
+</div>
+</div>
+<!-- Dimmed Overlay -->
+<div class="absolute inset-0 bg-black/30 dark:bg-black/60 z-30 pointer-events-none"></div>
+<!-- Active Voice Card (Expanded) -->
+<div class="absolute inset-x-0 bottom-0 z-40 p-4">
+<div class="flex flex-col items-stretch justify-start rounded-3xl shadow-2xl bg-white dark:bg-[#1a2b2f] p-6 gap-6 border border-white/20">
+<!-- SectionHeader Style Title -->
+<div class="flex flex-col items-center">
+<div class="w-12 h-1 bg-gray-200 dark:bg-gray-700 rounded-full mb-6"></div>
+<h4 class="text-primary text-xs font-bold leading-normal tracking-[0.1em] uppercase mb-1">Morning planning</h4>
+<div class="flex items-center gap-2">
+<div class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+</div>
+<p class="text-[#111618] dark:text-white text-2xl font-bold tracking-tight">Listening...</p>
+</div>
+</div>
+<!-- Expanded Visual / Pulse Area -->
+<div class="flex flex-col items-center justify-center py-8">
+<div class="relative flex items-center justify-center">
+<!-- Outer Pulse Rings -->
+<div class="absolute w-40 h-40 bg-primary/10 rounded-full animate-pulse"></div>
+<div class="absolute w-32 h-32 bg-primary/20 rounded-full"></div>
+<!-- Primary Microphone Button -->
+<button class="relative z-10 flex size-24 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary text-white shadow-lg transform active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-4xl" data-icon="Microphone">mic</span>
+</button>
+</div>
+<div class="mt-8 text-center px-6">
+<p class="text-[#60808a] dark:text-gray-300 text-lg font-medium leading-relaxed italic">
+                            "I want to focus on deep work for two hours this morning."
+                        </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 pb-4">
+<div class="flex px-0 justify-center w-full">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] shadow-md">
+<span class="truncate">Say your intention</span>
+</button>
+</div>
+<div class="flex px-0 justify-center w-full">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-4 bg-background-light dark:bg-gray-800 text-[#111618] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] border border-gray-100 dark:border-gray-700">
+<span class="truncate">Stop &amp; add task</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Safe Area Spacer -->
+<div class="h-8"></div>
+</div>
+</div>
+</body></html>

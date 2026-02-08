@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Goal - GoalMuse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a7da4",
+                        "background-light": "#fdfdfd",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full max-w-[480px] mx-auto flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-[#111618] dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
+</div>
+<h2 class="text-[#111618] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Edit goal</h2>
+</div>
+<div class="flex flex-col gap-2 pt-4">
+<!-- Goal Image/Cover (Custom addition for premium feel) -->
+<div class="px-4 pb-4">
+<div class="relative w-full h-40 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+<img alt="Scenic mountain landscape" class="w-full h-full object-cover opacity-90" data-alt="Scenic mountain landscape at sunrise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPedclzoqzBh2RWreBLhEV-2PhxKkCt-yFstZyLA390eSm5Tw8iylb_uvCb-Cgj4kKKK3HSp5np1fDzGXcGwnQMRcNteIICNRgM25VRW0GTYKoNo5SWmxZxA7ULnd9qNnj_eyNdRLlOeEjEWvcnnmQJ1glguZScB5NVjZQqUA2jzF-FPENZvONUxjMXnkiZl13AAR_oET5Vhg2Zm1b6G6qaHtfghFgkf7s5e5UKbvD1ffmLXXNAEYbcA8fqLC4t9bKFYHKx-qRzlk"/>
+<div class="absolute bottom-3 right-3 bg-white/90 dark:bg-black/50 p-2 rounded-full flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-sm text-[#111618] dark:text-white">edit</span>
+</div>
+</div>
+</div>
+<!-- TextField: Goal Title -->
+<div class="flex flex-wrap items-end gap-4 px-4 py-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-semibold leading-normal pb-2 px-1">Goal</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe3e6] dark:border-gray-700 bg-white dark:bg-[#1a2b32] h-14 placeholder:text-[#60808a] p-[15px] text-base font-normal leading-normal transition-all" value="Summit Mount Rainier"/>
+</label>
+</div>
+<!-- TextField: Description -->
+<div class="flex flex-wrap items-end gap-4 px-4 py-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-semibold leading-normal pb-2 px-1">Description (optional)</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111618] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe3e6] dark:border-gray-700 bg-white dark:bg-[#1a2b32] min-h-32 placeholder:text-[#60808a] p-[15px] text-base font-normal leading-normal transition-all">Train for the physical climb and organize the logistics with a certified guide for the upcoming summer season.</textarea>
+</label>
+</div>
+<!-- TextField: Target Date -->
+<div class="flex flex-wrap items-end gap-4 px-4 py-2">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#111618] dark:text-gray-200 text-sm font-semibold leading-normal pb-2 px-1">Target date (optional)</p>
+<div class="flex w-full flex-1 items-stretch rounded-xl">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl rounded-r-none border-r-0 text-[#111618] dark:text-white focus:outline-0 focus:ring-0 border border-[#dbe3e6] dark:border-gray-700 bg-white dark:bg-[#1a2b32] h-14 placeholder:text-[#60808a] p-[15px] pr-2 text-base font-normal leading-normal" value="August 15, 2024"/>
+<div class="text-[#60808a] flex border border-[#dbe3e6] dark:border-gray-700 bg-white dark:bg-[#1a2b32] items-center justify-center pr-[15px] rounded-r-xl border-l-0">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Main Action: Save Changes -->
+<div class="flex px-4 pt-8 pb-2">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 flex-1 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20">
+<span class="truncate">Save changes</span>
+</button>
+</div>
+<!-- Secondary Action: Delete Goal -->
+<div class="flex px-4 py-2 justify-center">
+<button class="flex items-center justify-center h-10 px-4 text-[#e54b4b] text-sm font-medium transition-colors hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg">
+<span class="material-symbols-outlined text-[18px] mr-2">delete</span>
+                    Delete goal
+                </button>
+</div>
+<div class="h-10 bg-transparent"></div>
+</div>
+</div>
+</body></html>

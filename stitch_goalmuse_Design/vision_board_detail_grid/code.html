@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vision Board Detail Grid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#13daec",
+                "background-light": "#f6f8f8",
+                "background-dark": "#102022",
+                "teal-tint": "#E0F2F1",
+              },
+              fontFamily: {
+                "display": ["Plus Jakarta Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111718] dark:text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden max-w-[430px] mx-auto bg-white dark:bg-background-dark shadow-2xl">
+<div class="sticky top-0 z-10 flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="text-[#111718] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<h2 class="text-[#111718] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] text-center">2025 Resolutions</h2>
+<p class="text-[#618689] text-xs font-medium">4 goals</p>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#111718] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<div class="grid grid-cols-2 gap-4 p-4">
+<div class="flex flex-col gap-3 p-3 bg-teal-tint dark:bg-teal-900/20 rounded-xl border border-teal-100 dark:border-teal-800/30">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg shadow-sm" data-alt="A grand piano in a sunlit room" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTRsy6No83Iq2IFfNL0khUA1aINTYvdmEvJeJl9v2g-e40I9qZRYJ6rZADnACEvscH66ow0q2qrUOVhCZ9JV4z89rZqsJ5neDEjrpZNNX9iJRghJZUFgDQ64ms9N6f9S465R8-w2u814SJj2kIPdGXECVXXB9C7hqXXZzJs082txPKMlx7eQRqMOwY7m7WBDXwQgPslmjZkDL-q0YGRDqcRHNq3QVbEPxs27nUmnkbLMT12lhBe0WsTBd5yozzzdW37ODiH7Bxtmo");'></div>
+<div class="px-1">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-tight">Learn Piano</p>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-xs font-normal leading-normal mt-1">Practice 30 mins daily</p>
+<div class="flex items-center gap-1 mt-3">
+<span class="material-symbols-outlined text-[14px] text-[#618689]">calendar_today</span>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-[10px] font-bold uppercase tracking-wider">Dec 31, 2025</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-3 bg-teal-tint dark:bg-teal-900/20 rounded-xl border border-teal-100 dark:border-teal-800/30">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg shadow-sm" data-alt="A person doing yoga at sunrise" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACG2_EYgeJdIjh0RwJQIGx531f4hiWEGZFqafRj7P8cTXLB4vvQ4DZSOE4i236kiEFfyZ1J_A8WVL5UxQpdbjwUZoWxXvEkuinMLZc0J9114jMZ26xoPrtkzCm1H90CLWUImXksPLfenVLqjZOiQ7WVIrcNqS2GO0bHm1QkL2cCTKkAdQPMlEvt03u-KcGQqzFk2-B2qCaV2FuOCg5w6dBUvSLgTXa0u0kCf6TYOB0_eRhmNFlcsAt08k0MdBdyCFV1zGigx--bMc");'></div>
+<div class="px-1">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-tight">Morning Yoga</p>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-xs font-normal leading-normal mt-1">15 min flow daily</p>
+<div class="flex items-center gap-1 mt-3">
+<span class="material-symbols-outlined text-[14px] text-[#618689]">calendar_today</span>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-[10px] font-bold uppercase tracking-wider">Jun 30, 2025</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-3 bg-teal-tint dark:bg-teal-900/20 rounded-xl border border-teal-100 dark:border-teal-800/30">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg shadow-sm" data-alt="A narrow street in a European city" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_mnMBrHwMFbUQGwiqjRBDc_NwYRFKxY94IXusNJ5POpHpROLqeKjVXKuKeD5MCoQqdaEQLvFdRiC_u2lZ-mNhQkObksJZqo8OH1LfQ8eDL7HcvyPppVY-xsFwmvXIi_z3AP7bkl4YGf3aGE0MxC75fm52C4-vVy4LU8CyZ6bdA4gQgJ7CDkgcpxDat5mz8CEccvSRjmVLjW1ZgzKjOENTL4LXm13W-o7RxVgucv5mCJaxh9qSjdaR6y_5J9uruPgCtbs-90CIirE");'></div>
+<div class="px-1">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-tight">Europe Trip</p>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-xs font-normal leading-normal mt-1">Plan for Summer 2025</p>
+<div class="flex items-center gap-1 mt-3">
+<span class="material-symbols-outlined text-[14px] text-[#618689]">calendar_today</span>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-[10px] font-bold uppercase tracking-wider">Aug 15, 2025</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 p-3 bg-teal-tint dark:bg-teal-900/20 rounded-xl border border-teal-100 dark:border-teal-800/30">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg shadow-sm" data-alt="Modern house architecture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCTUKQImlG-nAnTN-8O_02_iL3RFKcWRXKgH8gj8Yst89eklciGeXCC2rwwwCe8wmYswygefsQYTHww_gdqpWfixYwX5lQcQIRNyqsbk1poseiuOfBY57F9wzzznHk1TEOkxKscOTp4PkxnnvQzC2HBtGH83Y6QJUxsegYEeQIjGW1cr4JOVvd1nRLELGsUMD4ogDlLcXPTUXVZnBeR7UlN3dflStkXgYzYkKpuD53oTjC0-OhA0VdAaeNuCh6nyl-DDY_H4XI57uk");'></div>
+<div class="px-1">
+<p class="text-[#111718] dark:text-white text-base font-bold leading-tight">Save for Home</p>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-xs font-normal leading-normal mt-1">Monthly savings target</p>
+<div class="flex items-center gap-1 mt-3">
+<span class="material-symbols-outlined text-[14px] text-[#618689]">calendar_today</span>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-[10px] font-bold uppercase tracking-wider">Dec 31, 2025</p>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden flex flex-col px-4 py-12">
+<div class="flex flex-col items-center gap-6">
+<div class="bg-center bg-no-repeat aspect-video bg-cover rounded-xl w-full max-w-[320px] shadow-lg" data-alt="Abstract illustration of a peaceful mountain landscape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-6ICQiYzSUZH3isyoRIr1mDyOMMOEnfUj1j1iCjyjV1FbcD5QLhaWPqZUutt80cSbPDCTzhI7PmCYnnu1P-wp1oBFQrs95Md9PdJfMuDY6aRYuhm2kwixZ3wiEBYx1oHPqHVwwSZ36TJV06PY1ld2MY-XtKKY6bWT6fueJgJ-T8kq4ajnQ3zmg8sQsxeWVtBw_6-QDv0i0m_YKvCOmHeTviXg_5yASoTJCeZkdB1Z-Z-aASGarj_FIjv38L9tk-iRfyzYnPwx8Pw");'></div>
+<div class="flex max-w-[480px] flex-col items-center gap-2">
+<p class="text-[#111718] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] text-center">No goals on this board</p>
+<p class="text-[#618689] dark:text-[#a1b6b8] text-sm font-normal leading-normal max-w-[280px] text-center">Add goals to build your vision and start tracking your progress.</p>
+</div>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-6 bg-primary text-[#111718] text-sm font-bold leading-normal tracking-[0.015em] shadow-md">
+<span class="truncate">Add goal</span>
+</button>
+</div>
+</div>
+</div>
+<div class="fixed bottom-8 right-8 z-20">
+<button class="flex items-center justify-center rounded-full w-14 h-14 bg-primary text-[#111718] shadow-xl hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+</div>
+<div class="h-10 bg-white dark:bg-background-dark"></div>
+</div>
+</body></html>
