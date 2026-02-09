@@ -20,7 +20,7 @@ def list_boards(
     result = []
     for b in boards:
         goal_count = db.query(func.count(Goal.id)).filter(Goal.board_id == b.id).scalar() or 0
-        result.append(BoardResponse.model_validate(b, update={"goal_count": goal_count}))
+        result.append(BoardResponse.model_validate(b).model_copy(update={"goal_count": goal_count}))
     return result
 
 
@@ -34,7 +34,7 @@ def create_board(
     db.add(board)
     db.commit()
     db.refresh(board)
-    return BoardResponse.model_validate(board, update={"goal_count": 0})
+    return BoardResponse.model_validate(board).model_copy(update={"goal_count": 0})
 
 
 def _get_board_or_404(db: Session, board_id: str, user_id: str) -> VisionBoard:

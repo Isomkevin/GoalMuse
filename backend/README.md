@@ -44,6 +44,25 @@ uvicorn app.main:app --reload --host 0.0.0.0
 
 On startup, the app creates tables if missing and adds any new columns to existing SQLite DBs (migration). For a one-off migration without starting the server, run: `python scripts/migrate_add_columns.py`.
 
+## Smoke test (curl)
+
+From the `backend` directory (requires `curl` and Python; no jq needed):
+
+```bash
+chmod +x scripts/test_api.sh
+./scripts/test_api.sh http://localhost:8000
+```
+
+Works in Git Bash on Windows (Python is usually available).
+
+This logs in as `demo@goalmuse.app` / `demo123`, then hits auth, boards, goals, tasks, journal, progress, AI, and profile endpoints. Voice transcribe is skipped (requires a real audio file); run manually if needed:
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/voice/transcribe" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -F "file=@/path/to/audio.m4a"
+```
+
 ## Mobile app (local testing)
 
 Point the mobile app at this backend using `EXPO_PUBLIC_API_BASE_URL`:

@@ -13,13 +13,28 @@ WEIGHT_ALIGNMENT = 0.30
 WEIGHT_AGENT = 0.15
 
 
+def _to_naive_utc(d: datetime) -> datetime:
+    """Normalize to naive UTC for comparison (avoids offset-naive vs offset-aware)."""
+    if d.tzinfo is None:
+        return d
+    return d.astimezone(timezone.utc).replace(tzinfo=None)
+
+
 def _days_with_activity(task_dates: list[datetime], journal_dates: list[datetime], last_n_days: int = 7) -> float:
     """Fraction of last N days that had at least one task completed or journal entry (0–100)."""
     if last_n_days <= 0:
         return 0.0
-    cutoff = datetime.now(timezone.utc) - timedelta(days=last_n_days)
-    task_days = {d.date() for d in task_dates if d >= cutoff}
-    journal_days = {d.date() for d in journal_dates if d >= cutoff}
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=last_n_days)).replace(tzinfo=None)
+    task_days = set()
+    for d in task_dates:
+        nd = _to_naive_utc(d)
+        if nd >= cutoff:
+            task_days.add(nd.date())
+    journal_days = set()
+    for d in journal_dates:
+        nd = _to_naive_utc(d)
+        if nd >= cutoff:
+            journal_days.add(nd.date())
     active_days = len(task_days | journal_days)
     return min(100.0, (active_days / last_n_days) * 100.0)
 
