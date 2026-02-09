@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -32,9 +33,7 @@ export function LoginScreen() {
   const handleLogin = async () => {
     if (!email.trim()) return;
     const ok = await login(email.trim(), password);
-    if (ok) {
-      // Auth state update will switch to main app
-    }
+    if (!ok) Alert.alert('Login failed', 'Invalid email or password. Check your credentials and try again.');
   };
 
   return (

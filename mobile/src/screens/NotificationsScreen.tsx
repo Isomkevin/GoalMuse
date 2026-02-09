@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../context/AuthContext';
 import { AppBar } from '../components/AppBar';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
-
-const NOTIF_KEY = '@goalmuse/notifications';
 
 interface NotificationPrefs {
   push: boolean;
@@ -20,30 +18,35 @@ const defaultPrefs: NotificationPrefs = {
   goalReminders: true,
 };
 
+function toPrefs(raw: Record<string, unknown> | null | undefined): NotificationPrefs {
+  if (!raw || typeof raw !== 'object') return defaultPrefs;
+  return {
+    push: typeof raw.push === 'boolean' ? raw.push : defaultPrefs.push,
+    emailDigest: typeof raw.emailDigest === 'boolean' ? raw.emailDigest : defaultPrefs.emailDigest,
+    goalReminders: typeof raw.goalReminders === 'boolean' ? raw.goalReminders : defaultPrefs.goalReminders,
+  };
+}
+
 export function NotificationsScreen() {
   const navigation = useNavigation<any>();
+  const { user, updateNotificationPreferences } = useAuth();
   const [prefs, setPrefs] = useState<NotificationPrefs>(defaultPrefs);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(NOTIF_KEY);
-        if (raw) setPrefs({ ...defaultPrefs, ...JSON.parse(raw) });
-      } catch (_) {}
-      setLoaded(true);
-    })();
-  }, []);
+    setPrefs(toPrefs(user?.notificationPreferences as Record<string, unknown> | undefined));
+    setLoaded(true);
+  }, [user?.notificationPreferences]);
 
   const updatePref = useCallback(
     async (key: keyof NotificationPrefs, value: boolean) => {
       const next = { ...prefs, [key]: value };
       setPrefs(next);
       try {
-        await AsyncStorage.setItem(NOTIF_KEY, JSON.stringify(next));
+        await updateNotificationPreferences(next);
       } catch (_) {}
     },
-    [prefs]
+    [prefs, updateNotificationPreferences]
   );
 
   return (

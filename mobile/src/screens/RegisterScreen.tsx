@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -24,9 +25,7 @@ export function RegisterScreen() {
   const handleRegister = async () => {
     if (!email.trim()) return;
     const ok = await register(email.trim(), password);
-    if (ok) {
-      // Auth state update will switch to main app
-    }
+    if (!ok) Alert.alert('Registration failed', 'Email may already be registered or the request failed. Try again.');
   };
 
   return (

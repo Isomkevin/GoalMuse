@@ -2,6 +2,8 @@ export interface User {
   id: string;
   email: string;
   displayName: string;
+  plan?: string;
+  notificationPreferences?: Record<string, unknown>;
 }
 
 export interface Goal {
@@ -13,6 +15,7 @@ export interface Goal {
   priority?: string;
   completed: boolean;
   imageUri?: string;
+  sortOrder?: number;
 }
 
 export interface Board {

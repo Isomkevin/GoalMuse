@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../context/AuthContext';
 import { AppBar } from '../components/AppBar';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
@@ -21,7 +22,8 @@ const PREMIUM_FEATURES = [
 
 export function SubscriptionPlanScreen() {
   const navigation = useNavigation<any>();
-  const isPremium = false; // Could come from context/AsyncStorage later
+  const { user } = useAuth();
+  const isPremium = user?.plan === 'premium';
 
   return (
     <View style={styles.container}>

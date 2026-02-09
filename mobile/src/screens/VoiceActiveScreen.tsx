@@ -6,6 +6,7 @@ import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
 import { useVoice } from '../hooks/useVoice';
 import { useAppState } from '../context/AppStateContext';
+import { useAuth } from '../context/AuthContext';
 
 type VoiceActiveParams = { flow?: string };
 
@@ -30,6 +31,7 @@ export function VoiceActiveScreen() {
   const flow = (route.params?.flow ?? 'morning') as VoiceFlow;
   const flowLabel = FLOW_LABELS[flow] ?? 'Morning planning';
 
+  const { token } = useAuth();
   const { addTask, addJournalEntry, tasks, goals } = useAppState();
   const [hasSpokenTTS, setHasSpokenTTS] = useState(false);
 
@@ -38,7 +40,7 @@ export function VoiceActiveScreen() {
 
   const voice = useVoice({
     flow: voiceFlow,
-    getToken: () => null, // Replace with AuthContext token when backend auth is wired
+    getToken: () => token ?? null,
   });
 
   // Morning / Reflection: TTS prompt on mount
@@ -85,10 +87,10 @@ export function VoiceActiveScreen() {
     const text = result.text.trim();
 
     if (flow === 'morning') {
-      addTask(text);
+      await addTask(text);
       navigation.goBack();
     } else if (flow === 'reflection') {
-      addJournalEntry(text, undefined, toYYYYMMDD(new Date()));
+      await addJournalEntry(text, undefined, toYYYYMMDD(new Date()));
       navigation.goBack();
     }
   }, [flow, voice, addTask, addJournalEntry, navigation]);

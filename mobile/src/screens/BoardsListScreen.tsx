@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppState } from '../context/AppStateContext';
 import { AppBar } from '../components/AppBar';
@@ -49,11 +49,11 @@ function ReadyForNewFocusBlock({
 
 export function BoardsListScreen() {
   const navigation = useNavigation<any>();
-  const { boards, addBoard, deleteBoard } = useAppState();
+  const { boards, addBoard, deleteBoard, isLoading } = useAppState();
   const isEmpty = boards.length === 0;
 
-  const handleCreateBoard = () => {
-    const id = addBoard('New board');
+  const handleCreateBoard = async () => {
+    const id = await addBoard('New board');
     navigation.navigate('BoardDetail', { boardId: id });
   };
 
@@ -67,6 +67,18 @@ export function BoardsListScreen() {
       ]
     );
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <AppBar title="My boards." titleAlign="left" />
+        <View style={styles.loadingWrap}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={styles.loadingText}>Loading boards…</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -162,6 +174,16 @@ const styles = StyleSheet.create({
   listContentEmpty: {
     flexGrow: 1,
     justifyContent: 'center',
+  },
+  loadingWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: colors.textMuted,
   },
   boardCard: {
     position: 'relative',

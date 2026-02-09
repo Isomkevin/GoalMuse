@@ -41,9 +41,9 @@ export function TasksJournalScreen() {
   const remaining = tasks.filter((t) => !t.completed).length;
   const activeGoals = goals.filter((g) => !g.completed);
 
-  const handleSaveEntry = () => {
+  const handleSaveEntry = async () => {
     if (!newJournalContent.trim()) return;
-    addJournalEntry(newJournalContent.trim(), selectedGoalIdForEntry ?? undefined, entryDate);
+    await addJournalEntry(newJournalContent.trim(), selectedGoalIdForEntry ?? undefined, entryDate);
     setNewJournalContent('');
     setSelectedGoalIdForEntry(null);
     setEntryDate(toYYYYMMDD(new Date()));
@@ -76,7 +76,7 @@ export function TasksJournalScreen() {
               </Pressable>
               <Icon name="edit_note" size={24} color={colors.textMuted} />
             </View>
-            <Pressable style={styles.addTaskBtn} onPress={() => { if (newTaskTitle.trim()) { addTask(newTaskTitle.trim()); setNewTaskTitle(''); } }}>
+            <Pressable style={styles.addTaskBtn} onPress={async () => { if (newTaskTitle.trim()) { await addTask(newTaskTitle.trim()); setNewTaskTitle(''); } }}>
               <Icon name="add_circle" size={20} color={colors.white} />
               <Text style={styles.addTaskBtnText}>Add to List</Text>
             </Pressable>
@@ -99,7 +99,7 @@ export function TasksJournalScreen() {
             visible={showVoiceTaskModal}
             mode="task"
             onDismiss={() => setShowVoiceTaskModal(false)}
-            onSave={(text) => { addTask(text); setShowVoiceTaskModal(false); }}
+            onSave={async (text) => { await addTask(text); setShowVoiceTaskModal(false); }}
           />
         </>
       ) : (
@@ -192,7 +192,7 @@ export function TasksJournalScreen() {
             visible={showVoiceTaskModal}
             mode="task"
             onDismiss={() => setShowVoiceTaskModal(false)}
-            onSave={(text) => { addTask(text); setShowVoiceTaskModal(false); }}
+            onSave={async (text) => { await addTask(text); setShowVoiceTaskModal(false); }}
           />
           <VoiceInputModal
             visible={showVoiceJournalModal}
