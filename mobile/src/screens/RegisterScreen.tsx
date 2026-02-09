@@ -24,8 +24,17 @@ export function RegisterScreen() {
 
   const handleRegister = async () => {
     if (!email.trim()) return;
-    const ok = await register(email.trim(), password);
-    if (!ok) Alert.alert('Registration failed', 'Email may already be registered or the request failed. Try again.');
+    const result = await register(email.trim(), password);
+    if (result.ok) return;
+    const title =
+      result.code === 'network'
+        ? 'Connection problem'
+        : result.code === 'server'
+          ? 'Server error'
+          : result.code === 'validation'
+            ? 'Invalid input'
+            : 'Registration failed';
+    Alert.alert(title, result.error);
   };
 
   return (

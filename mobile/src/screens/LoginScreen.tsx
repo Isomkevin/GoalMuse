@@ -32,8 +32,17 @@ export function LoginScreen() {
 
   const handleLogin = async () => {
     if (!email.trim()) return;
-    const ok = await login(email.trim(), password);
-    if (!ok) Alert.alert('Login failed', 'Invalid email or password. Check your credentials and try again.');
+    const result = await login(email.trim(), password);
+    if (result.ok) return;
+    const title =
+      result.code === 'network'
+        ? 'Connection problem'
+        : result.code === 'server'
+          ? 'Server error'
+          : result.code === 'validation'
+            ? 'Invalid input'
+            : 'Login failed';
+    Alert.alert(title, result.error);
   };
 
   return (

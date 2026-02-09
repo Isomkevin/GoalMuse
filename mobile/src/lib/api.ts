@@ -6,6 +6,18 @@
 const API_BASE = process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:8000';
 const PREFIX = '/api/v1';
 
+/** Thrown for HTTP errors (statusCode set) or network/connection failures (no statusCode). */
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly statusCode?: number,
+    public readonly detail?: string
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+
 export type OnUnauthorized = () => void;
 let onUnauthorized: OnUnauthorized | null = null;
 export function setOnUnauthorized(fn: OnUnauthorized | null) {
@@ -24,11 +36,17 @@ async function request<T>(
   };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(url, {
-    method,
-    headers,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      method,
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'Network request failed';
+    throw new ApiError(msg, undefined, undefined);
+  }
 
   if (res.status === 401 && onUnauthorized) {
     onUnauthorized();
@@ -43,7 +61,7 @@ async function request<T>(
     } catch {
       if (text) detail = text;
     }
-    throw new Error(detail);
+    throw new ApiError(detail, res.status, detail);
   }
 
   if (!text) return undefined as T;
