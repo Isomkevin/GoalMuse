@@ -19,6 +19,20 @@ Mobile app: vision boards, goals, tasks, journal, and AI-powered insights with *
 
 ---
 
+## Submission
+
+| | |
+|--|--|
+| **What is this?** | An app that turns your vision board and daily habits into one clear next step and a progress score you can trust. |
+| **Code** | [GitHub repository](https://github.com/YOUR_USERNAME/YOUR_REPO) |
+| **Demo video** | [Watch on YouTube](https://www.youtube.com/watch?v=VIDEO_ID) |
+| **Live demo** | *Optional — add link to deployed app (e.g. Expo, Vercel)* |
+| **Presentation** | *Optional — add link to deck* |
+
+*(Replace `YOUR_USERNAME/YOUR_REPO` and `VIDEO_ID` with your actual repo and video ID. Full copy-paste text for the submission form is in `SUBMISSION_CHECKPOINT_3.md`.)*
+
+---
+
 ## Value in 60 seconds
 
 - **Vision boards & goals** — Create a board, add goals (with optional target dates).
@@ -30,7 +44,7 @@ Mobile app: vision boards, goals, tasks, journal, and AI-powered insights with *
 
 ## Architecture
 
-- **Frontend:** Expo + React Native + TypeScript + Zustand. Tabs: Board, Goals, Tasks & Journal, Insights, Voice.
+- **Mobile:** Expo + React Native + TypeScript + Zustand. Tabs: Board, Goals, Tasks & Journal, Insights, Voice.
 - **Backend:** FastAPI, JWT, CRUD (boards, goals, tasks, journal). Progress confidence + AI insights. Opik on agent/LLM.
 - **AI:** Alignment, Synergy, Optimization agents; single LLM interface. Modular, explainable.
 
@@ -40,7 +54,7 @@ Full diagram and API list: `docs/PHASE_0_ARCHITECTURE_AND_CONSTRAINTS.md`.
 
 **Backend:** `cd backend && python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt && uvicorn app.main:app --reload --port 8000`
 
-**Frontend:** `cd frontend && npm install && npx expo start`
+**Mobile app:** `cd mobile && npm install && npx expo start`
 
 Mock login: **demo@goalmuse.app** / **demo123** if backend is not running.
 
