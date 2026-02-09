@@ -40,7 +40,8 @@ Replace with your actual GitHub repo URL.
 
 Replace with your actual YouTube video URL.
 
-**https://www.youtube.com/watch?v=YOUR_VIDEO_ID**
+**https://www.youtube.com/watch?v=lVpWJ1BQtmE**  
+Short link: **https://youtu.be/lVpWJ1BQtmE**
 
 ---
 

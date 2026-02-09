@@ -12,8 +12,7 @@ Mobile app: vision boards, goals, tasks, journal, and AI-powered insights with *
 
 ## Video / Demo
 
-<!-- Add your video: replace VIDEO_ID in both URLs below with your YouTube video ID (e.g. from https://www.youtube.com/watch?v=VIDEO_ID) -->
-[![Goal Muse — Demo Video](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+[![Goal Muse — Demo Video](https://img.youtube.com/vi/lVpWJ1BQtmE/0.jpg)](https://www.youtube.com/watch?v=lVpWJ1BQtmE)
 
 *Click the thumbnail above to watch the demo on YouTube.*
 
@@ -25,11 +24,11 @@ Mobile app: vision boards, goals, tasks, journal, and AI-powered insights with *
 |--|--|
 | **What is this?** | An app that turns your vision board and daily habits into one clear next step and a progress score you can trust. |
 | **Code** | [GitHub repository](https://github.com/Isomkevin/GoalMuse) |
-| **Demo video** | [Watch on YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID) |
+| **Demo video** | [Watch on YouTube](https://www.youtube.com/watch?v=lVpWJ1BQtmE) |
 | **Live demo** | [goal-muse.vercel.app](https://goal-muse.vercel.app/) |
 | **Presentation** | [Pitch deck](https://pitch.com/v/ai-goalmuse-pitch-transform-vision-to-results-nqznsz) |
 
-*(Replace `YOUR_VIDEO_ID` in the demo video link and in the embed below when your video is ready. Full copy-paste text for the submission form is in `SUBMISSION_CHECKPOINT_3.md`.)*
+*(Full copy-paste text for the submission form is in `SUBMISSION_CHECKPOINT_3.md`.)*
 
 ---
 

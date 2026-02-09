@@ -22,6 +22,7 @@ const symbolToIcon: Record<string, string> = {
   arrow_back: 'arrow-left',
   search: 'magnify',
   more_horiz: 'dots-horizontal',
+  more_vert: 'dots-vertical',
   calendar_today: 'calendar',
   home: 'view-dashboard-outline',
   analytics: 'chart-line',
