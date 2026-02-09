@@ -3,13 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Goal Muse — Your vision, one board. Set goals, build vision boards, and stay on track with voice and AI." />
-    <title>Goal Muse — Your vision, one board.</title>
+    <title>Goal Muse — Your vision, one board. Vision boards, goals & AI insights</title>
+    <meta name="description" content="Goal Muse turns intention into action. Create vision boards, set goals, track tasks with voice commands and AI insights. Your vision, one board." />
+    <meta name="keywords" content="vision board, goal setting app, AI goals, voice commands, productivity app, goal tracking, habit tracker, AI insights" />
+    <meta name="author" content="Goal Muse" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="canonical" href="https://goal-muse.vercel.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://goal-muse.vercel.app/" />
+    <meta property="og:title" content="Goal Muse — Your vision, one board." />
+    <meta property="og:description" content="Set goals, build vision boards, and stay on track with voice commands and AI insights. Goal Muse turns intention into action." />
+    <meta property="og:image" content="https://goal-muse.vercel.app/phone-screenshot.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Goal Muse" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://goal-muse.vercel.app/" />
+    <meta name="twitter:title" content="Goal Muse — Your vision, one board." />
+    <meta name="twitter:description" content="Set goals, build vision boards, and stay on track with voice commands and AI insights." />
+    <meta name="twitter:image" content="https://goal-muse.vercel.app/phone-screenshot.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
     <link rel="stylesheet" href="/src/style.css" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://goal-muse.vercel.app/#organization",
+          "name": "Goal Muse",
+          "url": "https://goal-muse.vercel.app",
+          "logo": { "@type": "ImageObject", "url": "https://goal-muse.vercel.app/icon.png" },
+          "sameAs": ["https://github.com/Isomkevin/GoalMuse"],
+          "contactPoint": { "@type": "ContactPoint", "email": "hello@goalmuse.app", "contactType": "customer service" }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://goal-muse.vercel.app/#website",
+          "url": "https://goal-muse.vercel.app",
+          "name": "Goal Muse",
+          "description": "Vision boards, goals, and AI insights. Your vision, one board.",
+          "publisher": { "@id": "https://goal-muse.vercel.app/#organization" },
+          "potentialAction": { "@type": "SearchAction", "target": "https://goal-muse.vercel.app/", "query-input": "required name=search_term_string" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Goal Muse",
+          "applicationCategory": "ProductivityApplication",
+          "operatingSystem": "Android",
+          "description": "Set goals, build vision boards, track tasks with voice commands and AI insights. Turns intention into action.",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "downloadUrl": "https://goal-muse.vercel.app/goalmuse_v1.apk"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>

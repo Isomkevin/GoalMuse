@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://goal-muse.vercel.app/sitemap.xml
