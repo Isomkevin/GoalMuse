@@ -1,6 +1,23 @@
+<div align="center">
+
+![Goal Muse Logo](assets/goalmuse-logo.png)
+
 # GoalMuse — AI Vision Board & Goal Companion
 
 Mobile app: vision boards, goals, tasks, journal, and AI-powered insights with **Opik** observability.
+
+</div>
+
+---
+
+## Video / Demo
+
+<!-- Add your video: replace VIDEO_ID in both URLs below with your YouTube video ID (e.g. from https://www.youtube.com/watch?v=VIDEO_ID) -->
+[![Goal Muse — Demo Video](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+
+*Click the thumbnail above to watch the demo on YouTube.*
+
+---
 
 ## Value in 60 seconds
 
