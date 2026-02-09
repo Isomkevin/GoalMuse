@@ -12,6 +12,27 @@ from app.services.auth import create_access_token, hash_password, verify_passwor
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
+def _user_to_response(user: User) -> UserResponse:
+    """Build UserResponse from ORM user so serialization never fails (e.g. UUID/id, JSON fields)."""
+    raw_prefs = getattr(user, "notification_preferences", None)
+    if raw_prefs is None:
+        prefs = None
+    elif isinstance(raw_prefs, dict):
+        prefs = raw_prefs
+    else:
+        try:
+            prefs = json.loads(raw_prefs) if isinstance(raw_prefs, str) and raw_prefs.strip() else None
+        except (json.JSONDecodeError, TypeError):
+            prefs = None
+    return UserResponse(
+        id=str(user.id),
+        email=str(user.email),
+        display_name=user.display_name,
+        plan=getattr(user, "plan", "free") or "free",
+        notification_preferences=prefs,
+    )
+
+
 @router.post("/register", response_model=Token)
 def register(data: UserCreate, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == data.email).first()
@@ -28,11 +49,11 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
-    access_token = create_access_token(user.id)
+    access_token = create_access_token(str(user.id))
     return Token(
         access_token=access_token,
         token_type="bearer",
-        user=UserResponse.model_validate(user),
+        user=_user_to_response(user),
     )
 
 
@@ -44,17 +65,17 @@ def login(data: UserCreate, db: Session = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password",
         )
-    access_token = create_access_token(user.id)
+    access_token = create_access_token(str(user.id))
     return Token(
         access_token=access_token,
         token_type="bearer",
-        user=UserResponse.model_validate(user),
+        user=_user_to_response(user),
     )
 
 
 @router.get("/me", response_model=UserResponse)
 def me(current_user: User = Depends(get_current_user)):
-    return current_user
+    return _user_to_response(current_user)
 
 
 @router.patch("/me", response_model=UserResponse)
@@ -71,7 +92,7 @@ def update_me(
         )
     db.commit()
     db.refresh(current_user)
-    return UserResponse.model_validate(current_user)
+    return _user_to_response(current_user)
 
 
 @router.post("/change-password")

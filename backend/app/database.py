@@ -28,12 +28,19 @@ def _sqlite_column_exists(conn, table: str, column: str) -> bool:
     return any(row[1] == column for row in result.fetchall())
 
 
+def _migrate_postgres_add_columns(conn):
+    """Add new columns to existing Postgres tables if missing (IF NOT EXISTS is no-op when present)."""
+    conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS llm_preferences TEXT"))
+
+
 def migrate_sqlite_add_columns():
-    """Add new columns to existing SQLite tables. No-op for Postgres or if columns exist."""
-    if not settings.database_url.startswith("sqlite"):
-        return
+    """Add new columns to existing tables. SQLite: full list. Postgres: llm_preferences for users."""
     with engine.connect() as conn:
         dialect = conn.dialect.name
+        if dialect == "postgresql":
+            _migrate_postgres_add_columns(conn)
+            conn.commit()
+            return
         if dialect != "sqlite":
             return
         # users
