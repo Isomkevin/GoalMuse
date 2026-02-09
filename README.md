@@ -58,6 +58,20 @@ Full diagram and API list: `docs/PHASE_0_ARCHITECTURE_AND_CONSTRAINTS.md`.
 
 Mock login: **demo@goalmuse.app** / **demo123** if backend is not running.
 
+## How we use Opik (evaluation & observability)
+
+We use Opik so every improvement is measurable and visible to judges and developers.
+
+- **Traces:** Each Insights request creates one trace with child spans for the alignment, synergy, and optimization agents and their LLM calls. Full hierarchy is visible in the Opik project.
+- **Eval scores (LLM-as-judge):** When `OPIK_RUN_EVALS=true`, we run three small judges per request and log scores on the trace: **alignment_quality**, **next_action_usefulness**, **synergy_relevance** (1–5). These appear as feedback scores in Opik.
+- **Human feedback on trace:** When a user taps "Did this help?" (Yes / Somewhat / No), we store the rating in the app and **log it to the corresponding Opik trace** via `log_traces_feedback_scores`, so you see trace + model/prompt + human rating in one place.
+- **Experiments (fixed dataset):** We run a small fixed dataset through the pipeline with different providers (e.g. OpenAI vs Gemini) and compare results in Opik. See `backend/scripts/experiments/` and run:  
+  `cd backend && OPIK_API_KEY=xxx LLM_PROVIDER=openai python -m scripts.experiments.run_experiment --label openai`  
+  then with another provider to compare traces and metrics.
+- **Dashboard (Judge / Dev view):** In the app, open **AI Insights** and tap the **three dots (⋮)** in the header to open the Opik dashboard in a WebView. It shows recent traces, eval and feedback summary, and a short "What we measure" section. You can also open `{API_BASE}/dashboard?token=YOUR_JWT` in a browser.
+
+Screenshots or a short video of your Opik project (traces, eval results, experiments) are recommended for submission so judges can see that Opik is in the workflow and used for metrics and decisions.
+
 ## Demo & judging
 
 - **5-min demo script:** `docs/DEMO_SCRIPT.md`

@@ -10,5 +10,6 @@ pydantic-settings==2.6.1
 email-validator>=2.0.0
 python-multipart==0.0.17
 openai>=1.0.0
+groq>=0.4.0
 opik>=0.1.0
 google-genai>=1.0.0

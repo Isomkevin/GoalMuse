@@ -1,13 +1,16 @@
 import logging
 import os
+from pathlib import Path
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from app.config import settings
 from app.database import Base, engine, migrate_sqlite_add_columns, SessionLocal
-from app.api.routes import auth, boards, entries, goals, progress, ai, voice
+from app.api.routes import auth, boards, entries, goals, progress, ai, voice, opik_dashboard
+from app.seed_demo import seed_demo_data
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +48,11 @@ async def lifespan(app: FastAPI):
         Base.metadata.create_all(bind=engine)
         migrate_sqlite_add_columns()
         seed_demo_user()
+        db = SessionLocal()
+        try:
+            seed_demo_data(db)
+        finally:
+            db.close()
     except Exception as e:
         if os.environ.get("VERCEL") and settings.database_url.startswith("sqlite"):
             logger.warning(
@@ -77,8 +85,22 @@ app.include_router(entries.router, prefix="/api/v1")
 app.include_router(progress.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api/v1")
 app.include_router(voice.router, prefix="/api/v1")
+app.include_router(opik_dashboard.router, prefix="/api/v1")
 
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+# Opik dashboard: single-page view of traces and eval summary (for WebView from app)
+_DASHBOARD_HTML = Path(__file__).resolve().parent / "static" / "dashboard.html"
+
+
+@app.get("/dashboard")
+def dashboard_page():
+    """Serve the Opik dashboard HTML. Use ?token=JWT to load data (app passes user token)."""
+    if _DASHBOARD_HTML.exists():
+        return FileResponse(_DASHBOARD_HTML, media_type="text/html")
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail="Dashboard not found")

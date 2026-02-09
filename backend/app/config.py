@@ -24,10 +24,15 @@ class Settings(BaseSettings):
     google_api_key: str = ""
     gemini_model: str = "gemini-2.0-flash"
 
+    # Voice STT: "openai" (Whisper) or "groq" (free tier). At least one key required for voice.
+    voice_provider: str = "groq"
+    groq_api_key: str = ""
+
     # Opik observability (optional: tracing disabled if not set)
     opik_api_key: str = ""
     opik_workspace: str = ""
     opik_project_name: str = "goal-muse"
+    opik_run_evals: bool = False  # When True, run LLM-as-judge evals per insight and log to trace
 
     class Config:
         env_file = ".env"

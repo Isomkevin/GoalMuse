@@ -1,9 +1,13 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+import threading
 from app.agents import run_alignment, run_optimization, run_synergy
-from app.agents._opik import track_agent
+from app.agents._opik import get_current_trace_id, track_agent
+from app.agents.evals import run_insight_evals_and_log
 from app.api.deps import get_current_user_id
+from app.config import settings
 from app.database import get_db
 from app.models import Goal, JournalEntry, Task, VisionBoard
 from app.models import InsightFeedback
@@ -69,13 +73,15 @@ def get_insights(
         goals_data, tasks_data, journal_snippets, completed_count
     )
 
+    trace_id = get_current_trace_id()
+
     pairs = [
         GoalPair(goal_ids=p.get("goal_ids", []) or [], reason=p.get("reason", "") or "")
         for p in synergy.get("pairs", [])
         if isinstance(p, dict)
     ]
 
-    return InsightsResponse(
+    response = InsightsResponse(
         alignment=AlignmentResponse(score=alignment["score"], explanation=alignment["explanation"]),
         synergy=SynergyResponse(
             pairs=pairs,
@@ -87,7 +93,23 @@ def get_insights(
             reason=optimization.get("reason", "") or "",
             goal_id=optimization.get("goal_id"),
         ),
+        trace_id=trace_id,
     )
+
+    if trace_id and settings.opik_run_evals:
+        goals_summary = "\n".join(f"- {g.get('title', '')}: {g.get('description', '')}" for g in goals_data)
+        threading.Thread(
+            target=run_insight_evals_and_log,
+            args=(trace_id, goals_summary, alignment, synergy, optimization),
+            daemon=True,
+        ).start()
+
+    return response
+
+
+def _feedback_value(rating: str) -> float:
+    """Map yes/no/somewhat to numeric score for Opik."""
+    return {"yes": 1.0, "somewhat": 0.5, "no": 0.0}.get(rating, 0.0)
 
 
 @router.post("/feedback", response_model=dict)
@@ -96,11 +118,29 @@ def submit_feedback(
     db: Session = Depends(get_db),
     user_id: str = Depends(get_current_user_id),
 ):
-    """Store 'Did this help?' feedback (yes / no / somewhat)."""
+    """Store 'Did this help?' feedback (yes / no / somewhat). Optionally log to Opik trace."""
     rating = (data.rating or "").strip().lower()
     if rating not in ("yes", "no", "somewhat"):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="rating must be yes, no, or somewhat")
     fb = InsightFeedback(user_id=user_id, rating=rating)
     db.add(fb)
     db.commit()
+
+    if data.trace_id and settings.opik_api_key:
+        try:
+            import opik
+            opik.Opik().log_traces_feedback_scores(
+                scores=[
+                    {
+                        "id": data.trace_id,
+                        "name": "user_feedback",
+                        "value": _feedback_value(rating),
+                        "reason": rating,
+                        "project_name": settings.opik_project_name or "goal-muse",
+                    }
+                ]
+            )
+        except Exception as e:
+            logging.getLogger(__name__).warning("Opik feedback log failed: %s", e)
+
     return {"ok": True}

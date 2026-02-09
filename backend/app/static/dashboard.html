@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoalMuse — Opik Dashboard</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 16px; background: #f5f5f5; color: #111; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .card h2 { font-size: 1.1rem; margin: 0 0 12px 0; color: #333; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #eee; }
+    th { font-weight: 600; color: #555; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .summary-item { background: #f8f9fa; padding: 12px; border-radius: 8px; }
+    .summary-item .label { font-size: 0.75rem; text-transform: uppercase; color: #666; }
+    .summary-item .value { font-size: 1.25rem; font-weight: 700; color: #0d9488; }
+    .judge-copy { font-size: 0.9rem; line-height: 1.6; color: #444; }
+    .judge-copy strong { color: #111; }
+    .loading { color: #666; padding: 24px; text-align: center; }
+    .error { color: #b91c1c; padding: 12px; background: #fef2f2; border-radius: 8px; margin-bottom: 16px; }
+    .muted { color: #888; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-type="module">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [data, setData] = useState(null);
+      const [error, setError] = useState(null);
+      const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+        if (!token) {
+          setError('Add ?token=YOUR_JWT to the URL to load dashboard data (use your app auth token).');
+          setLoading(false);
+          return;
+        }
+        const base = window.location.origin;
+        fetch(base + '/api/v1/opik-dashboard/data', {
+          headers: { 'Authorization': 'Bearer ' + token },
+        })
+          .then((r) => {
+            if (!r.ok) throw new Error(r.status === 401 ? 'Invalid or expired token' : 'Failed to load');
+            return r.json();
+          })
+          .then(setData)
+          .catch((e) => setError(e.message))
+          .finally(() => setLoading(false));
+      }, []);
+
+      if (loading) return <div className="loading">Loading dashboard…</div>;
+      if (error) return <div className="error">{error}</div>;
+
+      const traces = data?.traces ?? [];
+      const summary = data?.summary ?? {};
+      const projectName = data?.project_name ?? 'goal-muse';
+      const configured = data?.opik_configured ?? false;
+
+      return (
+        <div className="container">
+          <h1>GoalMuse — Opik Dashboard</h1>
+          <p className="subtitle">Traces, eval scores, and human feedback for the Insights pipeline. Project: <strong>{projectName}</strong></p>
+
+          <div className="card">
+            <h2>What we measure in Opik</h2>
+            <div className="judge-copy">
+              <p><strong>Traces:</strong> Each Insights request creates one trace with child spans for alignment, synergy, and optimization agents and their LLM calls.</p>
+              <p><strong>Eval scores (when enabled):</strong> alignment_quality, next_action_usefulness, synergy_relevance — LLM-as-judge scores (1–5) logged on each trace.</p>
+              <p><strong>Human feedback:</strong> "Did this help?" (Yes / Somewhat / No) is sent to Opik as user_feedback on the corresponding trace.</p>
+              <p><strong>Experiments:</strong> We run a fixed dataset with different providers (e.g. OpenAI vs Gemini) and compare results in Opik. See <code>backend/scripts/experiments/</code>.</p>
+            </div>
+          </div>
+
+          {Object.keys(summary).length > 0 && (
+            <div className="card">
+              <h2>Eval & feedback summary</h2>
+              <div className="summary-grid">
+                {Object.entries(summary).map(([name, v]) => (
+                  <div key={name} className="summary-item">
+                    <div className="label">{name.replace(/_/g, ' ')}</div>
+                    <div className="value">avg {v.avg}</div>
+                    <div className="muted">n={v.count}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="card">
+            <h2>Recent traces</h2>
+            {!configured && <p className="muted">Opik not configured — no traces to show.</p>}
+            {configured && traces.length === 0 && <p className="muted">No traces yet. Use the app Insights tab to generate traces.</p>}
+            {traces.length > 0 && (
+              <table>
+                <thead>
+                  <tr><th>Name</th><th>Time</th><th>Scores</th></tr>
+                </thead>
+                <tbody>
+                  {traces.slice(0, 30).map((t) => (
+                    <tr key={t.id}>
+                      <td>{t.name}</td>
+                      <td className="muted">{t.start_time ? new Date(t.start_time).toLocaleString() : '—'}</td>
+                      <td>{(t.feedback_scores || []).map((s) => (typeof s === 'object' ? s.name + ': ' + s.value : s)).join(', ') || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

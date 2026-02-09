@@ -27,10 +27,12 @@ class InsightsResponse(BaseModel):
     alignment: AlignmentResponse
     synergy: SynergyResponse
     optimization: OptimizationResponse
+    trace_id: str | None = None  # Opik trace id for linking feedback to this insights run
 
 
 class FeedbackCreate(BaseModel):
     rating: str  # yes, no, somewhat
+    trace_id: str | None = None  # When set, log feedback to this Opik trace
 
 
 class FeedbackResponse(BaseModel):
