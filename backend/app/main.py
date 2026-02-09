@@ -1,10 +1,15 @@
+import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import settings
 from app.database import Base, engine, migrate_sqlite_add_columns, SessionLocal
 from app.api.routes import auth, boards, entries, goals, progress, ai, voice
+
+logger = logging.getLogger(__name__)
 
 DEMO_EMAIL = "demo@goalmuse.app"
 DEMO_PASSWORD = "demo123"
@@ -32,9 +37,22 @@ def seed_demo_user():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    migrate_sqlite_add_columns()
-    seed_demo_user()
+    # On Vercel (serverless), the filesystem is read-only. SQLite cannot write
+    # to a local file, so DB init will fail. Use DATABASE_URL with Postgres
+    # (e.g. Vercel Postgres, Neon) in production. We run init in try/except so
+    # the app still starts and /health works even if DB isn't available.
+    try:
+        Base.metadata.create_all(bind=engine)
+        migrate_sqlite_add_columns()
+        seed_demo_user()
+    except Exception as e:
+        if os.environ.get("VERCEL") and settings.database_url.startswith("sqlite"):
+            logger.warning(
+                "Database init skipped on Vercel with SQLite (read-only fs). "
+                "Set DATABASE_URL to a Postgres URL (e.g. Vercel Postgres or Neon)."
+            )
+        else:
+            logger.exception("Database init failed during startup: %s", e)
     yield
 
 
