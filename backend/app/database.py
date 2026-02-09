@@ -44,6 +44,8 @@ def migrate_sqlite_add_columns():
                 conn.execute(text('ALTER TABLE users ADD COLUMN plan VARCHAR(50) DEFAULT "free"'))
             if not _sqlite_column_exists(conn, "users", "notification_preferences"):
                 conn.execute(text("ALTER TABLE users ADD COLUMN notification_preferences TEXT"))
+            if not _sqlite_column_exists(conn, "users", "llm_preferences"):
+                conn.execute(text("ALTER TABLE users ADD COLUMN llm_preferences TEXT"))
         # vision_boards
         if conn.execute(text("SELECT 1 FROM sqlite_master WHERE type='table' AND name='vision_boards'")).scalar():
             if not _sqlite_column_exists(conn, "vision_boards", "cover_image_uri"):

@@ -84,9 +84,11 @@ def main():
 
     # Summary
     ok = [r for r in results if "error" not in r]
+    run_metrics = {}
     if ok:
         avg_align = sum(r["alignment_score"] for r in ok) / len(ok)
         avg_action_len = sum(len(r["optimization_action"]) for r in ok) / len(ok)
+        run_metrics = {"alignment_avg": round(avg_align, 2), "action_length_avg": round(avg_action_len, 0)}
         print(f"\nSummary (n={len(ok)}): avg alignment_score={avg_align:.1f} avg action_len={avg_action_len:.0f}")
         print(f"Provider: {provider}  Label: {args.label or '(none)'}")
 
@@ -94,6 +96,43 @@ def main():
         with open(args.output, "w") as f:
             json.dump({"provider": provider, "label": args.label, "results": results}, f, indent=2)
         print(f"Wrote {args.output}")
+
+    # Write app-consumable summary for Advanced Features (Opik as measuring tape)
+    try:
+        from datetime import datetime
+        _backend_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        results_dir = os.path.join(_backend_root, "experiment_results")
+        os.makedirs(results_dir, exist_ok=True)
+        latest_path = os.path.join(results_dir, "latest.json")
+        # Load existing runs so we can append this run and compute recommendation
+        existing = {"runs": [], "recommendation": None}
+        if os.path.exists(latest_path):
+            try:
+                existing = json.load(open(latest_path))
+            except Exception:
+                pass
+        runs = list(existing.get("runs", []))
+        this_run = {"label": args.label or provider, "provider": provider, "metrics": run_metrics}
+        # Dedupe by label: replace if same label
+        runs = [r for r in runs if r.get("label") != this_run["label"]]
+        runs.append(this_run)
+        # Simple recommendation: highest alignment_avg
+        best = None
+        best_score = -1
+        for r in runs:
+            m = r.get("metrics") or {}
+            s = m.get("alignment_avg", 0)
+            if s > best_score:
+                best_score = s
+                best = r.get("provider") or r.get("label")
+        with open(latest_path, "w") as f:
+            json.dump({
+                "runs": runs,
+                "recommendation": best,
+                "updated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            }, f, indent=2)
+    except Exception as e:
+        print(f"Warning: could not write experiment_results/latest.json: {e}", file=sys.stderr)
 
     return 0 if results else 1
 

@@ -13,12 +13,35 @@ from app.models.journal_entry import journal_entry_goals
 DEMO_EMAIL = "demo@goalmuse.app"
 
 
+# Cover image URLs for demo boards (Unsplash, theme-matched)
+BOARD_COVERS = {
+    "Career & Growth": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400",
+    "Health & Fitness": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400",
+    "Personal Projects": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",
+}
+
+
+def _ensure_demo_board_covers(db: Session, user_id: str) -> None:
+    """Update existing demo boards that have no cover image. Safe to run anytime."""
+    for title, cover_uri in BOARD_COVERS.items():
+        board = db.query(VisionBoard).filter(
+            VisionBoard.user_id == user_id,
+            VisionBoard.title == title,
+            VisionBoard.cover_image_uri.is_(None),
+        ).first()
+        if board:
+            board.cover_image_uri = cover_uri
+
+
 def seed_demo_data(db: Session) -> None:
     """Seed boards, goals, tasks, journal entries, and feedback for the demo user."""
     user = db.query(User).filter(User.email == DEMO_EMAIL).first()
     if not user:
         return
-    if db.query(VisionBoard).filter(VisionBoard.user_id == user.id).first():
+    existing = db.query(VisionBoard).filter(VisionBoard.user_id == user.id).first()
+    if existing:
+        _ensure_demo_board_covers(db, user.id)
+        db.commit()
         return  # Already seeded
 
     now = datetime.now(timezone.utc)
@@ -28,17 +51,17 @@ def seed_demo_data(db: Session) -> None:
     b1 = VisionBoard(
         user_id=user.id,
         title="Career & Growth",
-        cover_image_uri=None,
+        cover_image_uri=BOARD_COVERS["Career & Growth"],
     )
     b2 = VisionBoard(
         user_id=user.id,
         title="Health & Fitness",
-        cover_image_uri=None,
+        cover_image_uri=BOARD_COVERS["Health & Fitness"],
     )
     b3 = VisionBoard(
         user_id=user.id,
         title="Personal Projects",
-        cover_image_uri=None,
+        cover_image_uri=BOARD_COVERS["Personal Projects"],
     )
     db.add_all([b1, b2, b3])
     db.flush()

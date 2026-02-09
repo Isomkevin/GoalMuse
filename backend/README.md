@@ -89,6 +89,12 @@ With your `.env` set (e.g. `OPIK_API_KEY`, `OPIK_WORKSPACE`, `OPIK_PROJECT_NAME`
    ```
    Check Opik for one trace per dataset item.
 
+   **Compare all providers (for Settings → Advanced Features):** To populate the in-app "How we compare (Opik)" section so users can see a recommendation when choosing an LLM, run:
+   ```bash
+   python -m scripts.experiments.run_all_experiments
+   ```
+   This runs the pipeline for each provider that has an API key and writes `experiment_results/latest.json`. The app reads this for the comparison table and "Recommended: …".
+
 6. **Test Groq (voice)** — With `VOICE_PROVIDER=groq` and `GROQ_API_KEY` set, POST an audio file:
    ```bash
    TOKEN="your_jwt_here"

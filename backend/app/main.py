@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 
 from app.config import settings
 from app.database import Base, engine, migrate_sqlite_add_columns, SessionLocal
-from app.api.routes import auth, boards, entries, goals, progress, ai, voice, opik_dashboard
+from app.api.routes import auth, boards, entries, goals, progress, ai, voice, opik_dashboard, settings as settings_router
 from app.seed_demo import seed_demo_data
 
 logger = logging.getLogger(__name__)
@@ -86,6 +86,7 @@ app.include_router(progress.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api/v1")
 app.include_router(voice.router, prefix="/api/v1")
 app.include_router(opik_dashboard.router, prefix="/api/v1")
+app.include_router(settings_router.router, prefix="/api/v1")
 
 
 @app.get("/health")

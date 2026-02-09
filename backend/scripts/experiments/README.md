@@ -19,6 +19,16 @@ python -m scripts.experiments.run_experiment --label openai
 python -m scripts.experiments.run_experiment --label gemini
 ```
 
+### Compare all configured providers (for Advanced Features)
+
+To populate the in-app "How we compare (Opik)" section in Settings → Advanced Features, run once with all API keys set:
+
+```bash
+cd backend && python -m scripts.experiments.run_all_experiments
+```
+
+This runs the same fixed dataset for each provider that has an API key (OpenAI, OpenRouter, Gemini) and writes `experiment_results/latest.json` with runs and a recommendation. The app reads this to show comparison and "Recommended: …".
+
 With `OPIK_API_KEY` set, each dataset item produces a trace in Opik. Run with different `LLM_PROVIDER` (or prompt versions) and compare traces and metrics in the Opik dashboard to see "version B vs version A" with data.
 
 ## Output

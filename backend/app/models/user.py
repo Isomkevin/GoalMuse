@@ -19,6 +19,7 @@ class User(Base):
     display_name = Column(String(255), nullable=True)
     plan = Column(String(50), nullable=False, default="free", server_default="free")
     notification_preferences = Column(Text, nullable=True)  # JSON: { "push", "emailDigest", "goalReminders" }
+    llm_preferences = Column(Text, nullable=True)  # JSON: { "provider": "gemini", "openai_model": "...", "openrouter_model": "...", "gemini_model": "..." }
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     boards = relationship("VisionBoard", back_populates="user")

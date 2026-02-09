@@ -1,16 +1,42 @@
 """
 Single LLM interface. Low temperature for consistent, explainable outputs.
 Supports OpenAI, OpenRouter, and Gemini via config.llm_provider.
+Per-request overrides (e.g. user preference) via set_llm_override() / clear_llm_override().
 Opik: when OPIK_API_KEY is set, traced calls are sent to Opik.
 """
 import json
 import logging
 import os
 import re
+from contextvars import ContextVar
 
 from app.config import settings
 
 logger = logging.getLogger(__name__)
+
+# Per-request override (e.g. from user LLM preference in settings). Keys: provider, model (optional).
+_llm_override: ContextVar[dict | None] = ContextVar("llm_override", default=None)
+
+
+def set_llm_override(provider: str | None = None, model: str | None = None) -> None:
+    """Set provider/model for the current context (e.g. request). Use clear_llm_override() after."""
+    if provider or model:
+        _llm_override.set({"provider": provider or settings.llm_provider, "model": model})
+    else:
+        _llm_override.set(None)
+
+
+def clear_llm_override() -> None:
+    """Clear per-request override."""
+    _llm_override.set(None)
+
+
+def _get_effective_provider_and_model() -> tuple[str, str | None]:
+    """Return (provider, model_override) for this context. model_override is None to use settings default."""
+    ov = _llm_override.get()
+    if ov:
+        return (ov.get("provider") or settings.llm_provider or "openai", ov.get("model"))
+    return (settings.llm_provider or "openai", None)
 
 # Opik: set env so track_openai / track_genai use our project when configured
 def _configure_opik_env():
@@ -22,10 +48,11 @@ def _configure_opik_env():
         os.environ.setdefault("OPIK_PROJECT_NAME", settings.opik_project_name)
 
 
-def _complete_openai(system: str, user: str) -> str | None:
+def _complete_openai(system: str, user: str, model: str | None = None) -> str | None:
     """OpenAI completion with Opik tracing."""
     if not settings.openai_api_key:
         return None
+    model = model or settings.openai_model
     try:
         from openai import OpenAI
         client = OpenAI(api_key=settings.openai_api_key)
@@ -40,7 +67,7 @@ def _complete_openai(system: str, user: str) -> str | None:
             except Exception as e:
                 logger.debug("Opik OpenAI tracing disabled: %s", e)
         r = client.chat.completions.create(
-            model=settings.openai_model,
+            model=model,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
@@ -54,10 +81,11 @@ def _complete_openai(system: str, user: str) -> str | None:
     return None
 
 
-def _complete_openrouter(system: str, user: str) -> str | None:
+def _complete_openrouter(system: str, user: str, model: str | None = None) -> str | None:
     """OpenRouter completion (OpenAI-compatible API) with Opik tracing."""
     if not settings.openrouter_api_key:
         return None
+    model = model or settings.openrouter_model
     try:
         from openai import OpenAI
         client = OpenAI(
@@ -75,7 +103,7 @@ def _complete_openrouter(system: str, user: str) -> str | None:
             except Exception as e:
                 logger.debug("Opik OpenRouter tracing disabled: %s", e)
         r = client.chat.completions.create(
-            model=settings.openrouter_model,
+            model=model,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
@@ -89,10 +117,11 @@ def _complete_openrouter(system: str, user: str) -> str | None:
     return None
 
 
-def _complete_gemini(system: str, user: str) -> str | None:
+def _complete_gemini(system: str, user: str, model: str | None = None) -> str | None:
     """Gemini completion with Opik tracing via track_genai."""
     if not settings.google_api_key:
         return None
+    model = model or settings.gemini_model
     try:
         from google import genai
         from google.genai import types
@@ -114,7 +143,7 @@ def _complete_gemini(system: str, user: str) -> str | None:
             temperature=0.2,
         )
         response = client.models.generate_content(
-            model=settings.gemini_model,
+            model=model,
             contents=user,
             config=config,
         )
@@ -134,10 +163,11 @@ _PROVIDERS = {
 
 def complete(system: str, user: str) -> str | None:
     """One completion. Returns content or None if disabled/failed.
-    Routes to the provider specified by settings.llm_provider."""
-    provider = (settings.llm_provider or "openai").lower().strip()
+    Uses per-request override (set_llm_override) if set, else settings.llm_provider."""
+    provider, model_override = _get_effective_provider_and_model()
+    provider = (provider or "openai").lower().strip()
     fn = _PROVIDERS.get(provider, _complete_openai)
-    return fn(system, user)
+    return fn(system, user, model_override)
 
 
 def complete_json(
