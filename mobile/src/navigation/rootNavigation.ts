@@ -6,7 +6,10 @@ export function navigateToEditGoal(goalId: string) {
   if (navigationRef.isReady()) {
     navigationRef.navigate('Main', {
       screen: 'Goals',
-      params: { screen: 'EditGoal', params: { goalId } },
-    });
+      params: {
+        screen: 'EditGoal',
+        params: { goalId },
+      },
+    } as never); // Type assertion to silence TS error
   }
 }

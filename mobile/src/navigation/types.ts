@@ -16,7 +16,12 @@ export type GoalsStackParamList = {
   TasksJournal: undefined;
 };
 
-export type StatsStackParamList = { StatsHome: undefined; Voice: undefined; VoiceActive: { flow?: string } };
+export type StatsStackParamList = {
+  StatsHome: undefined;
+  Voice: undefined;
+  VoiceActive: { flow?: string };
+  OpikDashboard: { url: string };
+};
 export type ProfileStackParamList = {
   Account: undefined;
   PersonalInformation: undefined;

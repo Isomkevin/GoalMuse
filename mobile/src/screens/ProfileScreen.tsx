@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
+import { useDemo } from '../context/DemoContext';
 import { BottomNav } from '../components/BottomNav';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
@@ -24,6 +25,7 @@ const menuItems: Array<{
 export function ProfileScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList, 'Account'>>();
   const { user, logout } = useAuth();
+  const { useMockData } = useDemo();
   const insets = useSafeAreaInsets();
 
   return (
@@ -35,6 +37,12 @@ export function ProfileScreen() {
           <Text style={styles.sheetTitle}>Account</Text>
           <Pressable onPress={() => (navigation.getParent() as any)?.navigate('Boards')}><Text style={styles.doneBtn}>Done</Text></Pressable>
         </View>
+        {useMockData ? (
+          <View style={styles.mockBanner}>
+            <Icon name="info" size={18} color={colors.white} />
+            <Text style={styles.mockBannerText}>Using mock data for demo purposes</Text>
+          </View>
+        ) : null}
         <View style={styles.profileSection}>
           <View style={styles.avatarWrap}>
             <View style={styles.avatar}>
@@ -79,6 +87,17 @@ const styles = StyleSheet.create({
   headerSpacer: { width: 40 },
   sheetTitle: { fontSize: 18, fontWeight: '600', color: colors.text },
   doneBtn: { fontSize: 14, fontWeight: '500', color: colors.primary },
+  mockBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: colors.primary,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  mockBannerText: { fontSize: 14, fontWeight: '600', color: colors.white },
   profileSection: { alignItems: 'center', paddingVertical: 32 },
   avatarWrap: { position: 'relative' },
   avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: colors.white, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 4 },

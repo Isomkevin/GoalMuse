@@ -5,12 +5,14 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
+import { useDemo } from '../context/DemoContext';
 import { AppBar } from '../components/AppBar';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
@@ -18,6 +20,7 @@ import { colors } from '../theme/colors';
 export function PersonalInformationScreen() {
   const navigation = useNavigation<any>();
   const { user, updateProfile } = useAuth();
+  const { useMockData, setUseMockData } = useDemo();
   const [displayName, setDisplayName] = useState(user?.displayName ?? '');
   const [saved, setSaved] = useState(false);
 
@@ -77,6 +80,20 @@ export function PersonalInformationScreen() {
           </View>
           <Text style={styles.hint}>Email cannot be changed here.</Text>
         </View>
+        <View style={styles.field}>
+          <View style={styles.toggleRow}>
+            <Text style={styles.label}>Use rich realistic mock data (demo)</Text>
+            <Switch
+              value={useMockData}
+              onValueChange={setUseMockData}
+              trackColor={{ false: colors.gray200, true: colors.primaryLight }}
+              thumbColor={useMockData ? colors.primary : colors.gray500}
+            />
+          </View>
+          <Text style={styles.hint}>
+            When on, the Settings page shows a notice that demo data is in use. Log in as demo@goalmuse.app to see server-seeded data.
+          </Text>
+        </View>
         <Pressable
           style={[styles.saveBtn, saved && styles.saveBtnSuccess]}
           onPress={handleSave}
@@ -115,6 +132,11 @@ const styles = StyleSheet.create({
   },
   inputReadOnly: { color: colors.gray500 },
   hint: { fontSize: 12, color: colors.gray500, marginTop: 6, marginLeft: 4 },
+  toggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   saveBtn: {
     height: 52,
     borderRadius: 12,

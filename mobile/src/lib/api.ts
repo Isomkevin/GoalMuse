@@ -139,6 +139,7 @@ interface InsightsResponse {
   alignment: { score: number; explanation: string };
   synergy: { pairs: { goal_ids: string[]; reason: string }[]; compound_actions: string[]; explanation: string };
   optimization: { action: string; reason: string; goal_id: string | null };
+  trace_id?: string | null;  // Opik trace id for linking feedback to this insights run
 }
 
 // --- Mappers (snake_case -> camelCase) ---
@@ -383,8 +384,11 @@ export const aiApi = {
     const q = boardId ? `?board_id=${encodeURIComponent(boardId)}` : '';
     return request<InsightsResponse>(`${PREFIX}/ai/insights${q}`, 'GET', token);
   },
-  async feedback(token: string, rating: 'yes' | 'no' | 'somewhat') {
-    await request(`${PREFIX}/ai/feedback`, 'POST', token, { rating });
+  async feedback(token: string, rating: 'yes' | 'no' | 'somewhat', traceId?: string | null) {
+    await request(`${PREFIX}/ai/feedback`, 'POST', token, {
+      rating,
+      ...(traceId != null && traceId !== '' && { trace_id: traceId }),
+    });
   },
 };
 

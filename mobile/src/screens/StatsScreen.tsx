@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import { useAppState } from '../context/AppStateContext';
-import { progressApi, aiApi } from '../lib/api';
+import { progressApi, aiApi, API_BASE } from '../lib/api';
 import { AppBar } from '../components/AppBar';
 import { BottomNav } from '../components/BottomNav';
 import { Icon } from '../components/Icon';
@@ -58,7 +58,7 @@ export function StatsScreen() {
   const handleFeedback = async (rating: 'yes' | 'no' | 'somewhat') => {
     if (!token || feedbackSent) return;
     try {
-      await aiApi.feedback(token, rating);
+      await aiApi.feedback(token, rating, insights?.trace_id ?? undefined);
       setFeedbackSent(true);
     } catch (_) {}
   };
@@ -69,9 +69,22 @@ export function StatsScreen() {
   const taskCompletionPct = breakdown ? Math.round(breakdown.task_completion) : completionPct;
   const consistencyPct = breakdown ? Math.round(breakdown.consistency) : taskPct;
 
+  const openOpikDashboard = () => {
+    if (!token) return;
+    const url = `${API_BASE}/dashboard?token=${encodeURIComponent(token)}`;
+    navigation.navigate('OpikDashboard', { url });
+  };
+
   return (
     <View style={styles.container}>
-      <AppBar title="AI Insights" />
+      <AppBar
+        title="AI Insights"
+        rightAction={
+          <TouchableOpacity onPress={openOpikDashboard} style={{ padding: 8 }} accessibilityLabel="Open Opik Dashboard">
+            <Icon name="more_vert" size={24} color={colors.text} />
+          </TouchableOpacity>
+        }
+      />
       {loading ? (
         <View style={styles.loadingWrap}>
           <ActivityIndicator size="large" color={colors.primary} />

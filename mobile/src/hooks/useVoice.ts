@@ -13,7 +13,7 @@ import {
   useAudioRecorderState,
 } from 'expo-audio';
 import * as Speech from 'expo-speech';
-import { transcribe, TranscribeResult } from '../lib/voiceApi';
+import { transcribe, TranscribeResult, VoiceApiError } from '../lib/voiceApi';
 
 const MAX_RECORD_SECONDS = 60;
 const MIME_M4A = 'audio/m4a';
@@ -145,8 +145,12 @@ export function useVoice(options: UseVoiceOptions = {}): UseVoiceReturn {
       const result = await transcribe(token, uri, MIME_M4A, flow);
       setTranscript(result.text);
       return result;
-    } catch {
-      setError('Transcription failed. Try typing instead.');
+    } catch (e) {
+      if (e instanceof VoiceApiError) {
+        setError(e.message);
+      } else {
+        setError('Transcription failed. Try typing instead.');
+      }
       return null;
     } finally {
       setIsTranscribing(false);
