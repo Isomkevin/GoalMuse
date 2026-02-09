@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
+import { useVoice } from '../hooks/useVoice';
+import { useAppState } from '../context/AppStateContext';
 
 type VoiceActiveParams = { flow?: string };
+
+type VoiceFlow = 'morning' | 'reflection' | 'nudge';
 
 const FLOW_LABELS: Record<string, string> = {
   morning: 'Morning planning',
@@ -15,30 +19,107 @@ const FLOW_LABELS: Record<string, string> = {
 
 const VISUALIZER_HEIGHTS = [4, 6, 10, 8, 5, 12, 7, 9, 6, 4];
 
+function toYYYYMMDD(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
+
 export function VoiceActiveScreen() {
   const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<{ VoiceActive: VoiceActiveParams }, 'VoiceActive'>>();
   const insets = useSafeAreaInsets();
-  const flow = route.params?.flow ?? 'morning';
+  const flow = (route.params?.flow ?? 'morning') as VoiceFlow;
   const flowLabel = FLOW_LABELS[flow] ?? 'Morning planning';
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordSeconds, setRecordSeconds] = useState(0);
+
+  const { addTask, addJournalEntry, tasks, goals } = useAppState();
+  const [hasSpokenTTS, setHasSpokenTTS] = useState(false);
+
+  const voiceFlow: 'task' | 'reflection' | 'generic' =
+    flow === 'morning' ? 'task' : flow === 'reflection' ? 'reflection' : 'generic';
+
+  const voice = useVoice({
+    flow: voiceFlow,
+    getToken: () => null, // Replace with AuthContext token when backend auth is wired
+  });
+
+  // Morning / Reflection: TTS prompt on mount
+  useEffect(() => {
+    if (flow === 'nudge') return;
+    if (hasSpokenTTS) return;
+    if (voice.isSpeaking) return;
+
+    const text =
+      flow === 'morning'
+        ? getMorningPrompt(tasks, goals)
+        : 'What went well today? What will you do differently tomorrow?';
+    voice.speak(text, () => setHasSpokenTTS(true));
+    return () => voice.stopSpeaking();
+  }, [flow, hasSpokenTTS]);
+
+  // Nudge flow: TTS speaks next action immediately
+  useEffect(() => {
+    if (flow !== 'nudge') return;
+    const text = getNextActionPrompt(tasks, goals);
+    voice.speak(text, () => setHasSpokenTTS(true));
+    return () => voice.stopSpeaking();
+  }, [flow]);
+
+  const handleStartRecording = useCallback(async () => {
+    try {
+      await voice.startRecording();
+    } catch {
+      Alert.alert(
+        'Microphone',
+        'Microphone permission denied. Enable it in Settings to use voice.'
+      );
+    }
+  }, [voice]);
+
+  const handleStopAndSave = useCallback(async () => {
+    if (flow === 'nudge') {
+      voice.stopSpeaking();
+      navigation.goBack();
+      return;
+    }
+    const result = await voice.stopRecordingAndTranscribe();
+    if (!result?.text?.trim()) return;
+    const text = result.text.trim();
+
+    if (flow === 'morning') {
+      addTask(text);
+      navigation.goBack();
+    } else if (flow === 'reflection') {
+      addJournalEntry(text, undefined, toYYYYMMDD(new Date()));
+      navigation.goBack();
+    }
+  }, [flow, voice, addTask, addJournalEntry, navigation]);
+
+  const handleCancel = useCallback(() => {
+    if (voice.isRecording) {
+      voice.stopRecordingAndTranscribe();
+    }
+    voice.stopSpeaking();
+    navigation.goBack();
+  }, [voice, navigation]);
+
+  const showRecordingUI = (flow === 'morning' || flow === 'reflection') && (voice.isRecording || voice.isTranscribing);
+  const showMicUI = (flow === 'morning' || flow === 'reflection') && !voice.isRecording && !voice.isTranscribing;
+  const isNudge = flow === 'nudge';
 
   return (
     <View style={styles.container}>
-      {/* Top bar */}
       <View style={[styles.topBar, { paddingTop: insets.top + 8 }]}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.topBtn}>
+        <Pressable onPress={handleCancel} style={styles.topBtn}>
           <Icon name="close" size={28} color={colors.primary} />
         </Pressable>
-        <Pressable style={styles.stopBadge}>
-          <Icon name="pause_circle" size={18} color={colors.primary} />
-          <Text style={styles.stopBadgeText}>Stop playback</Text>
-        </Pressable>
-        <View style={styles.topSpacer} />
+        {voice.isSpeaking && (
+          <Pressable style={styles.stopBadge} onPress={() => voice.stopSpeaking()}>
+            <Icon name="pause_circle" size={18} color={colors.primary} />
+            <Text style={styles.stopBadgeText}>Stop playback</Text>
+          </Pressable>
+        )}
+        {!voice.isSpeaking && <View style={styles.topSpacer} />}
       </View>
 
-      {/* Dimmed background */}
       <View style={styles.dimmedBg}>
         <Text style={styles.dimmedLabel}>Your Vision</Text>
         <View style={styles.dimmedGrid}>
@@ -49,67 +130,149 @@ export function VoiceActiveScreen() {
       </View>
       <View style={styles.overlay} pointerEvents="none" />
 
-      {/* Active voice card */}
       <View style={[styles.card, { paddingBottom: insets.bottom + 24 }]}>
         <View style={styles.cardHandle} />
         <Text style={styles.flowLabel}>{flowLabel}</Text>
-        <View style={styles.listeningRow}>
-          <View style={styles.redDot}>
-            <View style={styles.redDotPing} />
-            <View style={styles.redDotInner} />
-          </View>
-          <Text style={styles.listeningText}>Listening...</Text>
-        </View>
 
-        {!isRecording ? (
+        {voice.error && (
+          <View style={styles.errorRow}>
+            <Icon name="error_outline" size={20} color={colors.red} />
+            <Text style={styles.errorText}>{voice.error}</Text>
+            <Pressable onPress={voice.clearError} style={styles.errorDismiss}>
+              <Icon name="close" size={18} color={colors.textMuted} />
+            </Pressable>
+          </View>
+        )}
+
+        {isNudge && (
           <>
+            <View style={styles.listeningRow}>
+              {voice.isSpeaking ? (
+                <>
+                  <View style={styles.redDot}>
+                    <View style={styles.redDotPing} />
+                    <View style={styles.redDotInner} />
+                  </View>
+                  <Text style={styles.listeningText}>Playing...</Text>
+                </>
+              ) : (
+                <Text style={styles.listeningText}>Your next action</Text>
+              )}
+            </View>
+            <Text style={styles.nudgeHint}>
+              {voice.isSpeaking
+                ? 'Listen to your next action'
+                : hasSpokenTTS
+                  ? 'Tap below to hear again or close.'
+                  : 'Preparing...'}
+            </Text>
+            <Pressable
+              style={styles.primaryAction}
+              onPress={() =>
+                voice.isSpeaking
+                  ? voice.stopSpeaking()
+                  : voice.speak(getNextActionPrompt(tasks, goals))
+              }
+            >
+              <Text style={styles.primaryActionText}>
+                {voice.isSpeaking ? 'Stop' : 'Read my next action'}
+              </Text>
+            </Pressable>
+            <Pressable style={styles.secondaryAction} onPress={handleCancel}>
+              <Text style={styles.secondaryActionText}>Done</Text>
+            </Pressable>
+          </>
+        )}
+
+        {showMicUI && (
+          <>
+            <View style={styles.listeningRow}>
+              {voice.isSpeaking ? (
+                <>
+                  <View style={styles.redDot}>
+                    <View style={styles.redDotPing} />
+                    <View style={styles.redDotInner} />
+                  </View>
+                  <Text style={styles.listeningText}>Listening...</Text>
+                </>
+              ) : (
+                <Text style={styles.listeningText}>
+                  {hasSpokenTTS ? 'Say your intention' : 'Preparing...'}
+                </Text>
+              )}
+            </View>
             <View style={styles.micSection}>
               <View style={styles.pulseOuter} />
               <View style={styles.pulseMid} />
-              <Pressable style={styles.micBtn}>
+              <Pressable
+                style={styles.micBtn}
+                onPress={handleStartRecording}
+                disabled={voice.isSpeaking}
+              >
                 <Icon name="mic" size={40} color={colors.white} />
               </Pressable>
             </View>
             <Text style={styles.transcriptPlaceholder}>
-              &ldquo;I want to focus on deep work for two hours this morning.&rdquo;
+              {voice.transcript
+                ? `"${voice.transcript}"`
+                : flow === 'morning'
+                  ? '"I want to focus on deep work for two hours this morning."'
+                  : '"Today I made progress on my portfolio. I\'ll prioritize the case studies tomorrow."'}
             </Text>
-            <Pressable style={styles.primaryAction} onPress={() => setIsRecording(true)}>
+            <Pressable
+              style={[styles.primaryAction, !hasSpokenTTS && styles.primaryActionDisabled]}
+              onPress={handleStartRecording}
+              disabled={voice.isSpeaking || !hasSpokenTTS}
+            >
               <Text style={styles.primaryActionText}>Say your intention</Text>
             </Pressable>
-            <Pressable style={styles.secondaryAction} onPress={() => navigation.goBack()}>
-              <Text style={styles.secondaryActionText}>Stop & add task</Text>
+            <Pressable style={styles.secondaryAction} onPress={handleCancel}>
+              <Text style={styles.secondaryActionText}>Cancel</Text>
             </Pressable>
           </>
-        ) : (
+        )}
+
+        {showRecordingUI && (
           <View style={styles.recordingSection}>
             <View style={styles.recordingHeader}>
               <View style={styles.recordingLabelRow}>
                 <View style={styles.recordingDot} />
-                <Text style={styles.recordingTitle}>Recording audio...</Text>
+                <Text style={styles.recordingTitle}>
+                  {voice.isTranscribing ? 'Transcribing...' : 'Recording audio...'}
+                </Text>
               </View>
-              <Text style={styles.recordingTime}>00:{String(recordSeconds).padStart(2, '0')} / 00:45</Text>
+              {!voice.isTranscribing && (
+                <Text style={styles.recordingTime}>
+                  00:{String(voice.recordSeconds).padStart(2, '0')} / 01:00
+                </Text>
+              )}
             </View>
-            <View style={styles.visualizer}>
-              {VISUALIZER_HEIGHTS.map((h, i) => (
-                <View key={i} style={[styles.visualizerBar, { height: h * 3 }]} />
-              ))}
-            </View>
-            <View style={styles.progressTrack}>
-              <View style={[styles.progressFill, { width: '35%' }]} />
-            </View>
+            {voice.isTranscribing ? (
+              <View style={styles.transcribingRow}>
+                <ActivityIndicator size="large" color={colors.primary} />
+                <Text style={styles.transcribingText}>Processing your voice...</Text>
+              </View>
+            ) : (
+              <View style={styles.visualizer}>
+                {VISUALIZER_HEIGHTS.map((h, i) => (
+                  <View key={i} style={[styles.visualizerBar, { height: h * 3 }]} />
+                ))}
+              </View>
+            )}
             <View style={styles.listeningRow}>
               <Icon name="hearing" size={20} color={colors.primary} />
               <Text style={styles.listeningHint}>GoalMuse is listening</Text>
             </View>
             <View style={styles.recordingActions}>
-              <Pressable style={styles.recordingBtnCancel} onPress={() => setIsRecording(false)}>
+              <Pressable style={styles.recordingBtnCancel} onPress={handleCancel}>
                 <Icon name="close" size={24} color={colors.red} />
               </Pressable>
-              <Pressable style={styles.recordingBtnSave} onPress={() => { setIsRecording(false); navigation.goBack(); }}>
+              <Pressable
+                style={styles.recordingBtnSave}
+                onPress={handleStopAndSave}
+                disabled={voice.isTranscribing}
+              >
                 <Icon name="check" size={32} color={colors.backgroundDark} />
-              </Pressable>
-              <Pressable style={styles.recordingBtnPause} onPress={() => setIsRecording(false)}>
-                <Icon name="pause" size={24} color={colors.text} />
               </Pressable>
             </View>
           </View>
@@ -117,6 +280,29 @@ export function VoiceActiveScreen() {
       </View>
     </View>
   );
+}
+
+function getMorningPrompt(tasks: { title: string; completed: boolean }[], goals: { title: string }[]): string {
+  const nextTask = tasks.find((t) => !t.completed);
+  const activeGoals = goals.filter((g) => true).slice(0, 3);
+  const goalTitles = activeGoals.map((g) => g.title).join(', ');
+  if (nextTask && goalTitles) {
+    return `Today's focus: ${goalTitles}. Your next action: ${nextTask.title}. Now say your intention for the day.`;
+  }
+  if (goalTitles) {
+    return `Today's focus: ${goalTitles}. Say your intention for the day.`;
+  }
+  return 'Say your intention for the day.';
+}
+
+function getNextActionPrompt(tasks: { title: string; completed: boolean }[], goals: { title: string }[]): string {
+  const nextTask = tasks.find((t) => !t.completed);
+  const activeGoals = goals.filter((g) => true).slice(0, 2);
+  const goalContext = activeGoals.length ? ` aligned with ${activeGoals[0].title}` : '';
+  if (nextTask) {
+    return `Your next action is: ${nextTask.title}${goalContext}.`;
+  }
+  return "You're all caught up. Great job! Consider adding a new task to move toward your goals.";
 }
 
 const styles = StyleSheet.create({
@@ -205,6 +391,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 4,
   },
+  errorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: colors.redLight,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  errorText: { flex: 1, fontSize: 14, color: colors.red },
+  errorDismiss: { padding: 4 },
   listeningRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -229,6 +427,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef4444',
   },
   listeningText: { fontSize: 24, fontWeight: '700', color: colors.text },
+  nudgeHint: {
+    fontSize: 14,
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginBottom: 24,
+    paddingHorizontal: 16,
+  },
   micSection: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -283,7 +488,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
   },
-  primaryActionText: { fontSize: 16, fontWeight: '700', color: colors.white },
+  primaryActionDisabled: { opacity: 0.5 },
   secondaryAction: {
     height: 48,
     borderRadius: 12,
@@ -300,6 +505,14 @@ const styles = StyleSheet.create({
   recordingDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.primary },
   recordingTitle: { fontSize: 16, fontWeight: '600', color: colors.text },
   recordingTime: { fontSize: 14, fontWeight: '500', color: colors.primary },
+  transcribingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+    paddingVertical: 24,
+  },
+  transcribingText: { fontSize: 16, color: colors.textMuted },
   visualizer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -313,21 +526,6 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: colors.primary,
     opacity: 0.7,
-  },
-  progressTrack: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.gray200,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  progressFill: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: '100%',
-    backgroundColor: colors.primary,
-    borderRadius: 4,
   },
   listeningHint: { fontSize: 14, fontWeight: '500', color: colors.textMuted, fontStyle: 'italic' },
   recordingActions: {
@@ -359,15 +557,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 4,
-  },
-  recordingBtnPause: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.gray100,
-    borderWidth: 1,
-    borderColor: colors.gray200,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

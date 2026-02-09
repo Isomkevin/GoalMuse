@@ -5,6 +5,7 @@ import { useAppState } from '../context/AppStateContext';
 import { AppBar } from '../components/AppBar';
 import { BottomNav } from '../components/BottomNav';
 import { DatePickerModal } from '../components/DatePickerModal';
+import { VoiceInputModal } from '../components/VoiceInputModal';
 import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
 
@@ -35,6 +36,8 @@ export function TasksJournalScreen() {
   const [goalPickerVisible, setGoalPickerVisible] = useState(false);
   const [entryDate, setEntryDate] = useState(toYYYYMMDD(new Date()));
   const [showEntryDatePicker, setShowEntryDatePicker] = useState(false);
+  const [showVoiceTaskModal, setShowVoiceTaskModal] = useState(false);
+  const [showVoiceJournalModal, setShowVoiceJournalModal] = useState(false);
   const remaining = tasks.filter((t) => !t.completed).length;
   const activeGoals = goals.filter((g) => !g.completed);
 
@@ -68,6 +71,9 @@ export function TasksJournalScreen() {
             <Text style={styles.inputLabel}>New Task</Text>
             <View style={styles.inputRow}>
               <TextInput style={styles.input} placeholder="Next step?" placeholderTextColor={colors.textMuted} value={newTaskTitle} onChangeText={setNewTaskTitle} />
+              <Pressable onPress={() => setShowVoiceTaskModal(true)} style={styles.voiceBtn}>
+                <Icon name="mic" size={24} color={colors.primary} />
+              </Pressable>
               <Icon name="edit_note" size={24} color={colors.textMuted} />
             </View>
             <Pressable style={styles.addTaskBtn} onPress={() => { if (newTaskTitle.trim()) { addTask(newTaskTitle.trim()); setNewTaskTitle(''); } }}>
@@ -89,11 +95,22 @@ export function TasksJournalScreen() {
               </Pressable>
             ))}
           </ScrollView>
+          <VoiceInputModal
+            visible={showVoiceTaskModal}
+            mode="task"
+            onDismiss={() => setShowVoiceTaskModal(false)}
+            onSave={(text) => { addTask(text); setShowVoiceTaskModal(false); }}
+          />
         </>
       ) : (
         <View style={styles.journalWrap}>
           <Text style={styles.inputLabel}>Today's Reflection</Text>
-          <TextInput style={styles.journalInput} placeholder="What did you do today?" placeholderTextColor={colors.textMuted} value={newJournalContent} onChangeText={setNewJournalContent} multiline />
+          <View style={styles.journalInputRow}>
+            <TextInput style={styles.journalInput} placeholder="What did you do today?" placeholderTextColor={colors.textMuted} value={newJournalContent} onChangeText={setNewJournalContent} multiline />
+            <Pressable onPress={() => setShowVoiceJournalModal(true)} style={styles.voiceBtnJournal}>
+              <Icon name="mic" size={24} color={colors.primary} />
+            </Pressable>
+          </View>
           <View style={styles.linkToGoalRow}>
             <Text style={styles.linkToGoalLabel}>Entry date</Text>
             <Pressable style={styles.linkToGoalBtn} onPress={() => setShowEntryDatePicker(true)}>
@@ -171,6 +188,22 @@ export function TasksJournalScreen() {
             mode="date"
             title="Entry date"
           />
+          <VoiceInputModal
+            visible={showVoiceTaskModal}
+            mode="task"
+            onDismiss={() => setShowVoiceTaskModal(false)}
+            onSave={(text) => { addTask(text); setShowVoiceTaskModal(false); }}
+          />
+          <VoiceInputModal
+            visible={showVoiceJournalModal}
+            mode="journal"
+            onDismiss={() => setShowVoiceJournalModal(false)}
+            onSave={(text) => {
+              addJournalEntry(text, selectedGoalIdForEntry ?? undefined, entryDate);
+              setNewJournalContent('');
+              setShowVoiceJournalModal(false);
+            }}
+          />
         </View>
       )}
       <BottomNav />
@@ -189,6 +222,7 @@ const styles = StyleSheet.create({
   inputLabel: { fontSize: 16, fontWeight: '600', color: colors.text, marginBottom: 8 },
   inputRow: { flexDirection: 'row', alignItems: 'center', height: 56, borderRadius: 12, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.white, paddingHorizontal: 16 },
   input: { flex: 1, fontSize: 16, color: colors.text },
+  voiceBtn: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', marginRight: 8 },
   addTaskBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, height: 48, borderRadius: 12, backgroundColor: colors.primary, marginTop: 12 },
   addTaskBtnText: { fontSize: 16, fontWeight: '700', color: colors.white },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: 24 },
@@ -202,7 +236,9 @@ const styles = StyleSheet.create({
   taskTitle: { flex: 1, fontSize: 16, fontWeight: '500', color: colors.text },
   taskTitleDone: { textDecorationLine: 'line-through', color: colors.textMuted },
   journalWrap: { flex: 1, padding: 16 },
-  journalInput: { minHeight: 120, borderRadius: 12, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.white, padding: 16, fontSize: 16, color: colors.text, textAlignVertical: 'top' },
+  journalInputRow: { position: 'relative', marginBottom: 0 },
+  journalInput: { minHeight: 120, borderRadius: 12, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.white, padding: 16, paddingRight: 48, fontSize: 16, color: colors.text, textAlignVertical: 'top' },
+  voiceBtnJournal: { position: 'absolute', top: 12, right: 12, width: 40, height: 40, alignItems: 'center', justifyContent: 'center', zIndex: 1 },
   linkToGoalRow: { marginTop: 12 },
   linkToGoalLabel: { fontSize: 14, fontWeight: '600', color: colors.text, marginBottom: 6 },
   linkToGoalBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.white },
