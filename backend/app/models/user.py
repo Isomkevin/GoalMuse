@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, String, func
+from sqlalchemy import Column, DateTime, String, Text, func
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -16,6 +16,9 @@ class User(Base):
     id = Column(String(36), primary_key=True, default=gen_uuid)
     email = Column(String(255), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
+    display_name = Column(String(255), nullable=True)
+    plan = Column(String(50), nullable=False, default="free", server_default="free")
+    notification_preferences = Column(Text, nullable=True)  # JSON: { "push", "emailDigest", "goalReminders" }
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     boards = relationship("VisionBoard", back_populates="user")

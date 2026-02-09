@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, Field
 
 
@@ -31,6 +31,7 @@ class TaskResponse(BaseModel):
 class JournalCreate(BaseModel):
     content: str = Field(..., min_length=1)
     goal_ids: list[str] = Field(default_factory=list, max_length=50)
+    entry_date: date | None = None
 
 
 class JournalResponse(BaseModel):
@@ -38,6 +39,7 @@ class JournalResponse(BaseModel):
     user_id: str
     content: str
     goal_ids: list[str]
+    entry_date: date | None = None
     created_at: datetime
 
     class Config:

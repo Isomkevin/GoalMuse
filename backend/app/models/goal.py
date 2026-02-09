@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import Boolean, Column, Date, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -14,6 +14,9 @@ class Goal(Base):
     description = Column(Text, default="", nullable=False)
     target_date = Column(Date, nullable=True)
     sort_order = Column(Integer, default=0, nullable=False)
+    completed = Column(Boolean, default=False, nullable=False)
+    priority = Column(String(100), nullable=True)
+    image_uri = Column(String(500), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     board = relationship("VisionBoard", back_populates="goals")

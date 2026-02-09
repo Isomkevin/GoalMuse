@@ -7,6 +7,9 @@ class GoalCreate(BaseModel):
     description: str = Field("", max_length=5000)
     target_date: date | None = None
     sort_order: int = 0
+    completed: bool = False
+    priority: str | None = Field(None, max_length=100)
+    image_uri: str | None = Field(None, max_length=500)
 
 
 class GoalUpdate(BaseModel):
@@ -14,6 +17,9 @@ class GoalUpdate(BaseModel):
     description: str | None = None
     target_date: date | None = None
     sort_order: int | None = None
+    completed: bool | None = None
+    priority: str | None = Field(None, max_length=100)
+    image_uri: str | None = Field(None, max_length=500)
 
 
 class GoalResponse(BaseModel):
@@ -23,6 +29,9 @@ class GoalResponse(BaseModel):
     description: str
     target_date: date | None
     sort_order: int
+    completed: bool = False
+    priority: str | None = None
+    image_uri: str | None = None
     created_at: datetime
 
     class Config:

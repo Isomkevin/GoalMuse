@@ -116,6 +116,7 @@ def _journal_to_response(entry: JournalEntry, goal_ids: list[str]) -> JournalRes
         user_id=entry.user_id,
         content=entry.content,
         goal_ids=goal_ids,
+        entry_date=entry.entry_date,
         created_at=entry.created_at,
     )
 
@@ -147,7 +148,7 @@ def create_journal(
     db: Session = Depends(get_db),
     user_id: str = Depends(get_current_user_id),
 ):
-    entry = JournalEntry(user_id=user_id, content=data.content)
+    entry = JournalEntry(user_id=user_id, content=data.content, entry_date=data.entry_date)
     db.add(entry)
     db.flush()
     if data.goal_ids:

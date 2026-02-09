@@ -72,6 +72,8 @@ def update_board(
     board = _get_board_or_404(db, board_id, user_id)
     if data.title is not None:
         board.title = data.title
+    if data.cover_image_uri is not None:
+        board.cover_image_uri = data.cover_image_uri.strip() or None
     db.commit()
     db.refresh(board)
     goal_count = db.query(func.count(Goal.id)).filter(Goal.board_id == board_id).scalar() or 0

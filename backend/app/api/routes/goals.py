@@ -43,6 +43,9 @@ def create_goal(
         description=data.description,
         target_date=data.target_date,
         sort_order=data.sort_order,
+        completed=data.completed,
+        priority=data.priority,
+        image_uri=data.image_uri,
     )
     db.add(goal)
     db.commit()
@@ -66,6 +69,12 @@ def update_goal(
         goal.target_date = data.target_date
     if data.sort_order is not None:
         goal.sort_order = data.sort_order
+    if data.completed is not None:
+        goal.completed = data.completed
+    if data.priority is not None:
+        goal.priority = data.priority.strip() or None
+    if data.image_uri is not None:
+        goal.image_uri = data.image_uri.strip() or None
     db.commit()
     db.refresh(goal)
     return goal
