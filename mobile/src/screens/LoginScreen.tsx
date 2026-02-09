@@ -17,7 +17,7 @@ import { Icon } from '../components/Icon';
 import { colors } from '../theme/colors';
 
 const DEMO_EMAIL = 'demo@goalmuse.app';
-const DEMO_PASSWORD = 'demo';
+const DEMO_PASSWORD = 'demo123';
 
 export function LoginScreen() {
   const navigation = useNavigation<any>();

@@ -3,14 +3,38 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import Base, engine, migrate_sqlite_add_columns
+from app.database import Base, engine, migrate_sqlite_add_columns, SessionLocal
 from app.api.routes import auth, boards, entries, goals, progress, ai, voice
+
+DEMO_EMAIL = "demo@goalmuse.app"
+DEMO_PASSWORD = "demo123"
+
+
+def seed_demo_user():
+    """Create demo user if it does not exist. Safe to call on every startup."""
+    from app.models import User
+    from app.services.auth import hash_password
+
+    db = SessionLocal()
+    try:
+        if db.query(User).filter(User.email == DEMO_EMAIL).first():
+            return
+        user = User(
+            email=DEMO_EMAIL,
+            password_hash=hash_password(DEMO_PASSWORD),
+            display_name="Demo User",
+        )
+        db.add(user)
+        db.commit()
+    finally:
+        db.close()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     migrate_sqlite_add_columns()
+    seed_demo_user()
     yield
 
 
