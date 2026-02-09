@@ -5,6 +5,7 @@ import { PersonalInformationScreen } from '../screens/PersonalInformationScreen'
 import { SecurityPasswordScreen } from '../screens/SecurityPasswordScreen';
 import { NotificationsScreen } from '../screens/NotificationsScreen';
 import { SubscriptionPlanScreen } from '../screens/SubscriptionPlanScreen';
+import { AdvancedFeaturesScreen } from '../screens/AdvancedFeaturesScreen';
 import type { ProfileStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
@@ -17,6 +18,7 @@ export function ProfileStack() {
       <Stack.Screen name="SecurityPassword" component={SecurityPasswordScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="SubscriptionPlan" component={SubscriptionPlanScreen} />
+      <Stack.Screen name="AdvancedFeatures" component={AdvancedFeaturesScreen} />
     </Stack.Navigator>
   );
 }

@@ -11,7 +11,7 @@ import { colors } from '../theme/colors';
 import type { ProfileStackParamList } from '../navigation/types';
 
 const menuItems: Array<{
-  icon: 'person' | 'lock' | 'notifications' | 'star';
+  icon: 'person' | 'lock' | 'notifications' | 'star' | 'tune';
   label: string;
   badge?: string;
   route: keyof ProfileStackParamList;
@@ -20,6 +20,7 @@ const menuItems: Array<{
   { icon: 'lock', label: 'Security & Password', route: 'SecurityPassword' },
   { icon: 'notifications', label: 'Notifications', route: 'Notifications' },
   { icon: 'star', label: 'Subscription Plan', badge: 'Premium', route: 'SubscriptionPlan' },
+  { icon: 'tune', label: 'Advanced Features', route: 'AdvancedFeatures' },
 ];
 
 export function ProfileScreen() {

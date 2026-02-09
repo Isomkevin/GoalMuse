@@ -7,6 +7,7 @@ export type BoardsStackParamList = {
   BoardsList: undefined;
   BoardDetail: { boardId: string };
   AddGoalFromBoard: { boardId: string };
+  EditBoard: { boardId: string };
 };
 
 export type GoalsStackParamList = {
@@ -28,6 +29,7 @@ export type ProfileStackParamList = {
   SecurityPassword: undefined;
   Notifications: undefined;
   SubscriptionPlan: undefined;
+  AdvancedFeatures: undefined;
 };
 
 export type RootTabParamList = {

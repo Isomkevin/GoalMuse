@@ -55,6 +55,7 @@ const symbolToIcon: Record<string, string> = {
   schedule: 'clock-outline',
   insights: 'chart-line',
   layers: 'layers',
+  tune: 'tune-variant',
 };
 
 interface IconProps {

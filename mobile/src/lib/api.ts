@@ -392,4 +392,44 @@ export const aiApi = {
   },
 };
 
+// --- Settings (Advanced Features: LLM + Opik experiments) ---
+export type LLMProviderOption = {
+  id: string;
+  name: string;
+  model_default: string;
+  available: boolean;
+};
+export type LLMSettingsResponse = {
+  available_providers: LLMProviderOption[];
+  current: { provider: string; model: string | null };
+};
+export type LLMExperimentRun = {
+  label: string;
+  provider: string;
+  metrics: { alignment_avg?: number; action_length_avg?: number };
+};
+export type LLMExperimentsResponse = {
+  runs: LLMExperimentRun[];
+  recommendation: string | null;
+  updated_at?: string;
+  message?: string;
+};
+
+export const settingsApi = {
+  async getLLM(token: string) {
+    return request<LLMSettingsResponse>(`${PREFIX}/settings/llm`, 'GET', token);
+  },
+  async updateLLM(token: string, provider: string, model?: string | null) {
+    return request<{ ok: boolean; current: { provider: string; model: string | null } }>(
+      `${PREFIX}/settings/llm`,
+      'PATCH',
+      token,
+      { provider, ...(model != null && { model: model || undefined }) }
+    );
+  },
+  async getLLMExperiments(token: string) {
+    return request<LLMExperimentsResponse>(`${PREFIX}/settings/llm-experiments`, 'GET', token);
+  },
+};
+
 export { API_BASE };

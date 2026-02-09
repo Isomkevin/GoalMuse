@@ -19,10 +19,11 @@ export function BottomNav() {
   const route = useRoute();
   const insets = useSafeAreaInsets();
   const currentRoute = route.name;
-  const   tabRouteNames: Record<string, string> = {
+  const tabRouteNames: Record<string, string> = {
     BoardsList: 'Boards',
     BoardDetail: 'Boards',
     AddGoalFromBoard: 'Boards',
+    EditBoard: 'Boards',
     BoardDetailGrid: 'Boards',
     GoalsList: 'Goals',
     AddGoal: 'Goals',

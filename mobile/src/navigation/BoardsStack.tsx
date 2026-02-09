@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { BoardsListScreen } from '../screens/BoardsListScreen';
 import { BoardDetailScreen } from '../screens/BoardDetailScreen';
 import { AddGoalScreen } from '../screens/AddGoalScreen';
+import { EditBoardScreen } from '../screens/EditBoardScreen';
 import type { BoardsStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<BoardsStackParamList>();
@@ -13,6 +14,7 @@ export function BoardsStack() {
       <Stack.Screen name="BoardsList" component={BoardsListScreen} />
       <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
       <Stack.Screen name="AddGoalFromBoard" component={AddGoalScreen} />
+      <Stack.Screen name="EditBoard" component={EditBoardScreen} />
     </Stack.Navigator>
   );
 }

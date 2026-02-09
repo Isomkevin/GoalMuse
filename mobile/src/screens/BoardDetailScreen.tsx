@@ -225,6 +225,28 @@ export function BoardDetailScreen() {
 
   const draggingGoal = draggingGoalId ? goals.find((g) => g.id === draggingGoalId) : null;
 
+  const handleBoardOptions = useCallback(() => {
+    if (!board) return;
+    Alert.alert(board.title, undefined, [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Edit board', onPress: () => navigation.navigate('EditBoard', { boardId }) },
+      {
+        text: 'Delete board',
+        style: 'destructive',
+        onPress: () => {
+          Alert.alert(
+            'Delete board?',
+            `"${board.title}" and all its goals will be removed. This can't be undone.`,
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Delete', style: 'destructive', onPress: () => { deleteBoard(boardId); navigation.goBack(); } },
+            ]
+          );
+        },
+      },
+    ]);
+  }, [board, boardId, deleteBoard, navigation]);
+
   const handleDeleteBoard = useCallback(() => {
     if (!board) return;
     Alert.alert(
@@ -276,7 +298,7 @@ export function BoardDetailScreen() {
         onBack={() => navigation.goBack()}
         subtitle={`${goals.length} active goals · Long-press a card to reorder`}
         rightAction={
-          <Pressable style={styles.iconBtn} onPress={handleDeleteBoard}>
+          <Pressable style={styles.iconBtn} onPress={handleBoardOptions}>
             <Icon name="more_horiz" size={24} color={colors.text} />
           </Pressable>
         }

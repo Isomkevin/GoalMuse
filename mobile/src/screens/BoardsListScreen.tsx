@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppState } from '../context/AppStateContext';
@@ -19,6 +19,59 @@ function getBoardIconName(title: string): string {
   if (t.includes('travel') || t.includes('adventure')) return 'explore';
   if (t.includes('wellness') || t.includes('health') || t.includes('fitness')) return 'person';
   return 'grid_view';
+}
+
+function BoardCard({
+  board,
+  onPress,
+  onOptions,
+}: {
+  board: Board;
+  onPress: () => void;
+  onOptions: () => void;
+}) {
+  const [imageError, setImageError] = useState(false);
+  const showImage = board.coverImageUri && !imageError;
+
+  return (
+    <View style={styles.boardCard}>
+      <Pressable style={styles.boardCardMain} onPress={onPress}>
+        <View style={styles.boardCardLeft}>
+          <Text style={styles.boardTitle}>{board.title}</Text>
+          <View style={styles.boardMetaRow}>
+            <Icon
+              name={getBoardIconName(board.title)}
+              size={18}
+              color={colors.textMuted}
+              style={styles.boardMetaIcon}
+            />
+            <Text style={styles.boardMeta}>{board.goalIds?.length ?? 0} goals</Text>
+          </View>
+        </View>
+        <View style={styles.boardThumbWrap}>
+          {showImage ? (
+            <Image
+              source={{ uri: board.coverImageUri }}
+              style={styles.boardThumb}
+              resizeMode="cover"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <View style={styles.boardThumbPlaceholder}>
+              <Image
+                source={require('../../assets/placeholder.png')}
+                style={styles.boardThumbPlaceholderImg}
+                resizeMode="cover"
+              />
+            </View>
+          )}
+        </View>
+      </Pressable>
+      <Pressable style={styles.boardCardMenu} onPress={onOptions}>
+        <Icon name="more_horiz" size={22} color={colors.textMuted} />
+      </Pressable>
+    </View>
+  );
 }
 
 function ReadyForNewFocusBlock({
@@ -55,6 +108,14 @@ export function BoardsListScreen() {
   const handleCreateBoard = async () => {
     const id = await addBoard('New board');
     navigation.navigate('BoardDetail', { boardId: id });
+  };
+
+  const handleBoardOptions = (boardId: string, boardTitle: string) => {
+    Alert.alert(boardTitle, undefined, [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Edit board', onPress: () => navigation.navigate('EditBoard', { boardId }) },
+      { text: 'Delete board', style: 'destructive', onPress: () => handleDeleteBoard(boardId, boardTitle) },
+    ]);
   };
 
   const handleDeleteBoard = (boardId: string, boardTitle: string) => {
@@ -98,46 +159,12 @@ export function BoardsListScreen() {
         showsVerticalScrollIndicator={false}
       >
         {boards.map((board) => (
-          <View key={board.id} style={styles.boardCard}>
-            <Pressable
-              style={styles.boardCardMain}
-              onPress={() => navigation.navigate('BoardDetail', { boardId: board.id })}
-            >
-              <View style={styles.boardCardLeft}>
-                <Text style={styles.boardTitle}>{board.title}</Text>
-                <View style={styles.boardMetaRow}>
-                  <Icon
-                    name={getBoardIconName(board.title)}
-                    size={18}
-                    color={colors.textMuted}
-                    style={styles.boardMetaIcon}
-                  />
-                  <Text style={styles.boardMeta}>
-                    {board.goalIds?.length ?? 0} goals
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.boardThumbWrap}>
-                {board.coverImageUri ? (
-                  <Image
-                    source={{ uri: board.coverImageUri }}
-                    style={styles.boardThumb}
-                    resizeMode="cover"
-                  />
-                ) : (
-                  <View style={styles.boardThumbPlaceholder}>
-                    <Icon name="image" size={28} color={colors.gray200} />
-                  </View>
-                )}
-              </View>
-            </Pressable>
-            <Pressable
-              style={styles.boardCardMenu}
-              onPress={() => handleDeleteBoard(board.id, board.title)}
-            >
-              <Icon name="more_horiz" size={22} color={colors.textMuted} />
-            </Pressable>
-          </View>
+          <BoardCard
+            key={board.id}
+            board={board}
+            onPress={() => navigation.navigate('BoardDetail', { boardId: board.id })}
+            onOptions={() => handleBoardOptions(board.id, board.title)}
+          />
         ))}
         <ReadyForNewFocusBlock onCreateBoard={handleCreateBoard} />
       </ScrollView>
@@ -249,8 +276,11 @@ const styles = StyleSheet.create({
     width: THUMB_SIZE,
     height: THUMB_SIZE,
     backgroundColor: colors.gray100,
-    alignItems: 'center',
-    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  boardThumbPlaceholderImg: {
+    width: '100%',
+    height: '100%',
   },
   // "Ready for a new focus?" block
   ctaBlock: {
