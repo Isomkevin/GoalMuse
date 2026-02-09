@@ -57,7 +57,7 @@ def get_board(
     goal_count = db.query(func.count(Goal.id)).filter(Goal.board_id == board_id).scalar() or 0
     goals = db.query(Goal).filter(Goal.board_id == board_id).order_by(Goal.sort_order).all()
     return BoardWithGoalsResponse(
-        board=BoardResponse.model_validate(board, update={"goal_count": goal_count}),
+        board=BoardResponse.model_validate(board).model_copy(update={"goal_count": goal_count}),
         goals=[GoalResponse.model_validate(g) for g in goals],
     )
 
@@ -77,7 +77,7 @@ def update_board(
     db.commit()
     db.refresh(board)
     goal_count = db.query(func.count(Goal.id)).filter(Goal.board_id == board_id).scalar() or 0
-    return BoardResponse.model_validate(board, update={"goal_count": goal_count})
+    return BoardResponse.model_validate(board).model_copy(update={"goal_count": goal_count})
 
 
 @router.delete("/{board_id}", status_code=204)
